@@ -4,6 +4,13 @@ All notable changes to slopless-ui are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- README install section rewritten: the registry command first, a manual
+  route and a directory table second, no narration.
+
 ## [1.1.0] - 2026-11-02
 
 The motion release. The skill now treats motion as a first-class craft axis

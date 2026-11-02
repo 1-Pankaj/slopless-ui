@@ -84,32 +84,25 @@ slopless-ui/
 
 ## Install
 
-The folder follows the [Agent Skills](https://agentskills.io) standard, so any compatible agent can load it.
-
-**One command, any supported agent.** The `skills` CLI installs straight from
-this GitHub repository; no npm account is involved:
-
 ```bash
 npx skills add 1-pankaj/slopless-ui
 ```
 
-**Claude Code, by hand**
+Or by hand:
 
 ```bash
 git clone https://github.com/1-pankaj/slopless-ui.git
-mkdir -p .claude/skills && cp -r slopless-ui .claude/skills/
+cp -r slopless-ui <skills-directory>
 ```
 
-**Google Antigravity / Gemini CLI**
+| Agent | Skills directory |
+|---|---|
+| Claude Code | `.claude/skills/` |
+| Antigravity | `.agents/skills/` |
+| Gemini CLI | `.gemini/skills/` |
+| Anything that reads `SKILL.md` | wherever your agent scans |
 
-```bash
-mkdir -p .agents/skills && cp -r slopless-ui .agents/skills/    # Antigravity
-mkdir -p .gemini/skills  && cp -r slopless-ui .gemini/skills/   # Gemini CLI
-```
-
-**Anything else** (Codex, Cursor, a rules-file agent): copy the folder anywhere the agent reads, or point your rules file at `SKILL.md`.
-
-For all projects at once, add `-g` to the CLI command or copy into the global folder (`~/.claude/skills/` for Claude Code). Reload the tool after installing: skills are discovered when a session starts.
+Global install: add `-g`, or copy into the user-level directory (`~/.claude/skills/` for Claude Code). Reload the tool afterwards; skills are discovered when a session starts.
 
 ## Use it
 
