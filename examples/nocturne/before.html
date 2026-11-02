@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOCTURNE 2026 | The Ultimate Electronic Music Festival</title>
+<meta name="description" content="NOCTURNE 2026 brings you three days of world-class electronic music. Get your tickets now for the ultimate festival experience!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #8B5CF6;
+    --secondary: #EC4899;
+    --dark: #0F0B1E;
+    --card: #1A1233;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--dark); color: #fff; line-height: 1.6;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(15,11,30,0.85); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(139,92,246,0.25);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { font-weight: 900; font-size: 22px; letter-spacing: 0.05em; color: #fff; text-decoration: none; }
+  .logo span { color: var(--primary); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: #fff; }
+  .btn {
+    display: inline-block; padding: 12px 26px; border-radius: 9999px;
+    font-weight: 700; font-size: 15px; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-primary { background: linear-gradient(90deg, #8B5CF6, #EC4899); color: #fff; }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-outline { color: #fff; border: 1px solid rgba(139,92,246,0.5); }
+  .hero { padding: 110px 0 80px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; top: -40%; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 600px;
+    background: radial-gradient(ellipse, rgba(139,92,246,0.3), rgba(236,72,153,0.15), transparent 70%);
+  }
+  .hero-date { font-size: 15px; font-weight: 600; color: var(--secondary);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; position: relative; }
+  h1 {
+    font-size: 84px; font-weight: 900; letter-spacing: 0.02em; line-height: 1;
+    margin-bottom: 20px; position: relative;
+    background: linear-gradient(90deg, #8B5CF6, #C026D3, #EC4899);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { font-size: 19px; color: rgba(255,255,255,0.65); max-width: 600px; margin: 0 auto 40px; position: relative; }
+  .hero-actions { display: flex; gap: 16px; justify-content: center; position: relative; }
+  .countdown { display: flex; gap: 16px; justify-content: center; margin-top: 56px; position: relative; }
+  .count-box {
+    background: var(--card); border: 1px solid rgba(139,92,246,0.3);
+    border-radius: 12px; padding: 18px 28px; text-align: center; min-width: 90px;
+  }
+  .count-num { font-size: 34px; font-weight: 800; color: var(--primary); }
+  .count-label { font-size: 12px; color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 0.1em; }
+  section { padding: 88px 0; }
+  .section-head { text-align: center; margin-bottom: 56px; }
+  .section-head .eyebrow {
+    text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px;
+    font-weight: 700; color: var(--secondary); margin-bottom: 12px; display: block;
+  }
+  h2 { font-size: 40px; font-weight: 800; margin-bottom: 12px; }
+  .section-head p { font-size: 17px; color: rgba(255,255,255,0.6); }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .artist-card {
+    background: var(--card); border: 1px solid rgba(139,92,246,0.25);
+    border-radius: 16px; overflow: hidden; text-align: center;
+    transition: transform 0.2s;
+  }
+  .artist-card:hover { transform: translateY(-4px); }
+  .artist-img { height: 240px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(139,92,246,0.4), rgba(236,72,153,0.3)); }
+  .artist-img span { font-size: 64px; }
+  .artist-body { padding: 24px; }
+  .artist-day { font-size: 12px; font-weight: 600; color: var(--secondary);
+    text-transform: uppercase; letter-spacing: 0.1em; }
+  .artist-body h3 { font-size: 24px; font-weight: 800; margin: 8px 0 6px; }
+  .artist-body p { font-size: 14px; color: rgba(255,255,255,0.55); }
+  .tickets { background: var(--card); border-radius: 24px; padding: 64px; }
+  .ticket-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 0; border-bottom: 1px solid rgba(139,92,246,0.2);
+  }
+  .ticket-row:last-child { border-bottom: none; }
+  .ticket-name { font-size: 20px; font-weight: 700; }
+  .ticket-desc { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+  .ticket-price { font-size: 30px; font-weight: 800; color: var(--primary); margin-right: 24px; }
+  .footer { border-top: 1px solid rgba(139,92,246,0.25); padding: 48px 0; text-align: center; }
+  .footer-links { display: flex; gap: 24px; justify-content: center; margin-top: 16px; }
+  .footer-links a { color: rgba(255,255,255,0.55); font-size: 14px; text-decoration: none; }
+  .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 20px; }
+  @media (max-width: 768px) {
+    h1 { font-size: 44px; }
+    h2 { font-size: 30px; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .nav-links a:not(.btn) { display: none; }
+    .countdown { flex-wrap: wrap; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .ticket-row { flex-direction: column; gap: 16px; text-align: center; }
+    .tickets { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">NOCTURNE<span>.</span></a>
+      <div class="nav-links">
+        <a href="#lineup">Lineup</a>
+        <a href="#tickets">Tickets</a>
+        <a href="#">Info</a>
+        <a href="#tickets" class="btn btn-primary">Buy Tickets</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-date">27 - 29 August 2026 &middot; Ghent, Belgium</div>
+      <h1>NOCTURNE 2026</h1>
+      <p>Three days of the finest electronic music in the heart of Ghent. World-class DJs, immersive stages, and an atmosphere you will never forget.</p>
+      <div class="hero-actions">
+        <a href="#tickets" class="btn btn-primary">Get Your Tickets Now</a>
+        <a href="#lineup" class="btn btn-outline">See Lineup</a>
+      </div>
+      <div class="countdown">
+        <div class="count-box">
+          <div class="count-num">298</div>
+          <div class="count-label">Days</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num">14</div>
+          <div class="count-label">Hours</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num">22</div>
+          <div class="count-label">Minutes</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num">08</div>
+          <div class="count-label">Seconds</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="lineup">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The Lineup</span>
+        <h2>World-class artists</h2>
+        <p>The biggest names in electronic music, all on one stage.</p>
+      </div>
+      <div class="grid-3">
+        <div class="artist-card">
+          <div class="artist-img"><span>&#127908;</span></div>
+          <div class="artist-body">
+            <span class="artist-day">Friday</span>
+            <h3>Nightpulse</h3>
+            <p>Techno icon with over 2 million monthly listeners.</p>
+          </div>
+        </div>
+        <div class="artist-card">
+          <div class="artist-img"><span>&#127908;</span></div>
+          <div class="artist-body">
+            <span class="artist-day">Saturday</span>
+            <h3>Luna Vice</h3>
+            <p>The queen of melodic house returns to Belgium.</p>
+          </div>
+        </div>
+        <div class="artist-card">
+          <div class="artist-img"><span>&#127908;</span></div>
+          <div class="artist-body">
+            <span class="artist-day">Sunday</span>
+            <h3>Basement Signal</h3>
+            <p>A legendary closing set you will talk about for years.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tickets">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Tickets</span>
+        <h2>Choose your experience</h2>
+        <p>Limited availability. Prices increase soon!</p>
+      </div>
+      <div class="tickets">
+        <div class="ticket-row">
+          <div>
+            <div class="ticket-name">Day Pass</div>
+            <div class="ticket-desc">Access to one day of your choice</div>
+          </div>
+          <div style="display:flex; align-items:center;">
+            <div class="ticket-price">&euro;49</div>
+            <a href="#" class="btn btn-outline">Buy Now</a>
+          </div>
+        </div>
+        <div class="ticket-row">
+          <div>
+            <div class="ticket-name">Full Pass</div>
+            <div class="ticket-desc">All three days, all stages, best value</div>
+          </div>
+          <div style="display:flex; align-items:center;">
+            <div class="ticket-price">&euro;119</div>
+            <a href="#" class="btn btn-primary">Buy Now</a>
+          </div>
+        </div>
+        <div class="ticket-row">
+          <div>
+            <div class="ticket-name">VIP Experience</div>
+            <div class="ticket-desc">Front stage, lounge, and perks</div>
+          </div>
+          <div style="display:flex; align-items:center;">
+            <div class="ticket-price">&euro;249</div>
+            <a href="#" class="btn btn-outline">Buy Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="logo">NOCTURNE<span>.</span></div>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Spotify</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-copy">2026 Nocturne Festival. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>

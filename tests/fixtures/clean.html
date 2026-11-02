@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clean fixture</title>
+<style>
+  :root {
+    --bg: #F6F1E5;
+    --ink: #201B12;
+    --accent: #8E3B2F;
+    --motion-base: 280ms;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  body { background: var(--bg); color: var(--ink); font-family: "Public Sans", "Helvetica Neue", Arial, sans-serif; }
+  .spinner { animation: spin 0.9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .row { transition: background-color var(--motion-base) var(--ease-out); }
+  a:focus-visible { outline: 2px solid var(--accent); }
+</style>
+</head>
+<body>
+  <main>
+    <h1>Quarry Lane Press</h1>
+    <p>Letterpress printing and bookbinding in Leeds since 1961. We set type by hand, mix ink by eye, and press one sheet at a time.</p>
+    <a href="#work">See recent work</a>
+    <img src="/photos/press-room.jpg" alt="The Heidelberg press in the Quarry Lane shop">
+  </main>
+</body>
+</html>

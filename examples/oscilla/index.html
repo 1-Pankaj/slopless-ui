@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>oscilla: realtime audio, sub-40ms, everywhere</title>
+<meta name="description" content="Oscilla is the realtime audio layer for voice agents, multiplayer games, and live rooms. Four lines of code, fourteen regions, 31ms p50.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   oscilla, landing page. Fictional product, built as a working
+   example for the slopless-ui skill.
+
+   brief:
+   audience: client and platform engineers evaluating a realtime audio API
+   feeling:  exact, kinetic
+   signature: the live waveform in the hero. It answers your cursor.
+   mode:     Persuade
+
+   contract (pairing 14 adapted, palette Volt from references/color.md):
+------------------------------------------------------------------- */
+:root {
+  --bg: #0B0D0A;
+  --surface: #13160F;
+  --panel: #10130B;
+  --line: #212917;
+  --line-2: #39442C;
+  --ink: #EEF3E3;
+  --muted: #9AA78C;
+  --accent: #C6F24E;
+  --accent-2: #D9FB70;
+  --accent-ink: #131A02;
+  --font-display: "Space Grotesk", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+  --space-1: 8px; --space-2: 16px; --space-3: 24px;
+  --space-4: 40px; --space-5: 64px; --space-6: 96px;
+  --radius: 10px;
+  --motion-fast: 140ms; --motion-base: 300ms; --motion-slow: 600ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+  --max: 1240px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.skip {
+  position: absolute; left: -9999px; top: 12px; z-index: 100;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none;
+}
+.skip:focus { left: 12px; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--space-3); }
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---------------- nav ---------------- */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(11, 13, 10, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; gap: var(--space-4); height: 68px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 19px; letter-spacing: -0.01em; }
+.brand-mark { display: block; }
+.nav-links { display: flex; gap: var(--space-3); margin-left: auto; }
+.nav-link {
+  position: relative; text-decoration: none; color: var(--muted);
+  font-size: 15px; padding: 6px 2px; transition: color var(--motion-fast) ease-out;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--motion-base) var(--ease-out);
+}
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* ---------------- buttons ---------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600; font-size: 16px;
+  text-decoration: none; cursor: pointer;
+  border-radius: var(--radius); padding: 14px 22px;
+  transition: background var(--motion-fast) ease-out, border-color var(--motion-fast) ease-out,
+              transform 120ms ease-out;
+  will-change: transform;
+}
+.btn:active { transform: translateY(1px) scale(0.99); transition-duration: 60ms; }
+.btn-fill { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
+.btn-fill:hover { background: var(--accent-2); border-color: var(--accent-2); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-2); }
+.btn-ghost:hover { border-color: var(--accent); }
+.btn-ghost .arrow { transition: transform var(--motion-base) var(--ease-out); }
+.btn-ghost:hover .arrow { transform: translateY(3px); }
+.btn-sm { padding: 9px 16px; font-size: 14.5px; border-radius: 8px; }
+.arrow-dn { font-size: 15px; }
+
+/* ---------------- hero ---------------- */
+.hero { position: relative; padding-top: var(--space-6); overflow: hidden; }
+.hero-grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle, #161C0F 1px, transparent 1.5px);
+  background-size: 30px 30px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 78%);
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--muted); margin-bottom: var(--space-3);
+}
+.eyebrow::before { content: ""; width: 8px; height: 8px; background: var(--accent); display: inline-block; }
+h1 {
+  font-size: clamp(2.9rem, 7.2vw, 6.4rem);
+  line-height: 1.02; letter-spacing: -0.035em; font-weight: 700;
+  max-width: 12ch;
+}
+h1 .lime { color: var(--accent); }
+.lede {
+  color: var(--muted); font-size: 1.18rem; max-width: 34em;
+  margin-top: var(--space-3);
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-4); }
+.hero-status {
+  display: flex; flex-wrap: wrap; gap: 10px 28px;
+  color: var(--muted); margin-top: var(--space-5);
+  padding-top: var(--space-2);
+}
+.hero-status b { color: var(--ink); font-weight: 500; }
+.wave-band { margin-top: var(--space-4); border-top: 1px solid var(--line); }
+#wave { display: block; width: 100%; height: 210px; cursor: crosshair; }
+
+/* load choreography: hero lines rise out of masks, once */
+.js .mask { display: block; overflow: hidden; }
+.js .mask > span { display: block; transform: translateY(112%); animation: rise 760ms var(--ease-out) forwards; animation-delay: var(--d, 0ms); }
+@keyframes rise { to { transform: translateY(0); } }
+.js .fade-in { opacity: 0; animation: appear 640ms ease-out forwards; animation-delay: var(--d, 0ms); }
+@keyframes appear { to { opacity: 1; } }
+
+/* ---------------- scroll reveals ---------------- */
+.js [data-reveal] {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 640ms var(--ease-out), transform 640ms var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal].in { opacity: 1; transform: none; }
+
+/* ---------------- ticker ---------------- */
+.ticker { border-block: 1px solid var(--line); overflow: hidden; }
+.ticker-track { display: flex; width: max-content; animation: ticker-scroll 42s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+@keyframes ticker-scroll { to { transform: translateX(-50%); } }
+.ticker-seq { display: flex; align-items: center; padding: 15px 0; color: var(--muted); white-space: nowrap; }
+.ticker-seq span { padding-inline: 26px; }
+.ticker-seq i { font-style: normal; color: var(--accent); }
+
+/* ---------------- sections ---------------- */
+.section { padding-block: var(--space-6); }
+.section + .section { border-top: 1px solid var(--line); }
+.sec-head { display: flex; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-5); flex-wrap: wrap; }
+.sec-index { color: var(--accent); }
+.sec-head h2 { font-size: clamp(1.8rem, 3.4vw, 2.75rem); letter-spacing: -0.02em; line-height: 1.12; font-weight: 700; }
+.sec-sub { color: var(--muted); max-width: 36em; margin-top: 10px; }
+
+/* bento */
+.bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--space-2); }
+.cell {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--space-3);
+  transition: border-color var(--motion-fast) ease-out, transform var(--motion-fast) ease-out;
+}
+.cell:hover { border-color: var(--line-2); }
+.cell-a { grid-column: span 7; display: flex; flex-direction: column; }
+.cell-b { grid-column: span 5; }
+.cell-c, .cell-d, .cell-e { grid-column: span 4; }
+.cell h3 { font-size: 1.22rem; letter-spacing: -0.01em; font-weight: 600; margin-bottom: 6px; }
+.cell .cap { color: var(--muted); font-size: 0.95rem; }
+
+/* code */
+.code-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.code-file { color: var(--muted); }
+.copy-btn {
+  font-family: var(--font-mono); font-size: 0.8125rem;
+  background: var(--panel); color: var(--muted);
+  border: 1px solid var(--line-2); border-radius: 7px;
+  padding: 6px 14px; cursor: pointer;
+  transition: color var(--motion-fast) ease-out, border-color var(--motion-fast) ease-out;
+}
+.copy-btn:hover { color: var(--ink); border-color: var(--accent); }
+.copy-btn.ok { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+pre {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 8px; padding: var(--space-2) var(--space-3);
+  overflow-x: auto; font-family: var(--font-mono);
+  font-size: 0.8625rem; line-height: 1.75; color: var(--ink);
+  flex: 1;
+}
+pre .c { color: var(--muted); }
+pre .s { color: var(--accent); }
+pre .k { color: #B7C79A; }
+pre .f { color: #E4EECf; }
+.foot-note { color: var(--muted); margin-top: 12px; }
+.foot-note code { font-family: var(--font-mono); color: var(--ink); font-size: 0.8125rem; }
+
+/* meters */
+.meter-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; margin-top: 14px; }
+.meter-label { color: var(--muted); }
+.meter-val { font-family: var(--font-mono); color: var(--ink); }
+.meter-track { grid-column: 1 / -1; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.meter-fill { height: 100%; width: 0; background: var(--accent); border-radius: 2px; transition: width 900ms var(--ease-out); }
+.in .meter-fill { width: var(--w); }
+
+/* lists */
+.tick-list { list-style: none; margin-top: 12px; display: grid; gap: 10px; }
+.tick-list li { display: flex; gap: 12px; color: var(--ink); font-size: 0.98rem; }
+.tick-list li::before { content: ""; width: 14px; height: 2px; background: var(--accent); margin-top: 11px; flex: none; }
+.region-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.region-grid span {
+  font-family: var(--font-mono); font-size: 0.8125rem; color: var(--ink);
+  border: 1px solid var(--line-2); border-radius: 6px; padding: 5px 10px;
+  transition: border-color var(--motion-fast) ease-out, color var(--motion-fast) ease-out;
+}
+.region-grid span:hover { border-color: var(--accent); color: var(--accent); }
+#eq { display: block; width: 100%; height: 150px; margin-top: 12px; }
+
+/* numbers strip */
+.numbers { display: grid; grid-template-columns: repeat(4, 1fr); }
+.number { padding: 6px var(--space-3); border-left: 1px solid var(--line); }
+.number:first-child { border-left: 0; padding-left: 0; }
+.number b {
+  display: block; font-size: clamp(2.4rem, 4.6vw, 3.9rem); font-weight: 700;
+  letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums;
+}
+.number b i { font-style: normal; font-size: 0.45em; color: var(--accent); margin-left: 4px; }
+.number span { color: var(--muted); font-size: 0.9rem; display: block; margin-top: 6px; }
+
+/* teams rows */
+.row {
+  display: grid; grid-template-columns: 64px 1.1fr 1.6fr auto 24px;
+  gap: var(--space-3); align-items: baseline;
+  padding: 26px 10px; border-top: 1px solid var(--line); text-decoration: none;
+  transition: background var(--motion-fast) ease-out;
+}
+.row:last-of-type { border-bottom: 1px solid var(--line); }
+.row:hover { background: var(--surface); }
+.row-idx { color: var(--muted); }
+.row h3 { font-size: 1.35rem; letter-spacing: -0.01em; font-weight: 600; transition: transform var(--motion-base) var(--ease-out); }
+.row:hover h3 { transform: translateX(8px); }
+.row p { color: var(--muted); font-size: 0.98rem; }
+.row-tag { color: var(--muted); border: 1px solid var(--line-2); border-radius: 6px; padding: 3px 10px; }
+.row-go { color: var(--accent); opacity: 0; transform: translateX(-8px); transition: opacity var(--motion-base) var(--ease-out), transform var(--motion-base) var(--ease-out); }
+.row:hover .row-go { opacity: 1; transform: none; }
+
+/* final cta */
+.cta { text-align: left; }
+.cta h2 { font-size: clamp(2.4rem, 5.6vw, 4.6rem); letter-spacing: -0.03em; line-height: 1.04; font-weight: 700; max-width: 14ch; }
+.cta p { color: var(--muted); margin: var(--space-3) 0 var(--space-4); }
+.cta .mono { color: var(--muted); }
+
+/* footer */
+footer { border-top: 1px solid var(--line); padding-block: var(--space-5) var(--space-4); }
+.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: var(--space-4); }
+.foot-brand p { color: var(--muted); max-width: 24em; margin-top: 12px; font-size: 0.95rem; }
+.foot-col b { display: block; color: var(--muted); font-weight: 500; margin-bottom: 12px; }
+.foot-col a { display: block; text-decoration: none; color: var(--ink); font-size: 0.95rem; padding: 4px 0; opacity: 0.85; transition: opacity var(--motion-fast) ease-out, color var(--motion-fast) ease-out; }
+.foot-col a:hover { color: var(--accent); opacity: 1; }
+.foot-base {
+  display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between;
+  border-top: 1px solid var(--line); margin-top: var(--space-5); padding-top: var(--space-3);
+  color: var(--muted);
+}
+
+/* ---------------- responsive ---------------- */
+@media (max-width: 980px) {
+  .cell-a, .cell-b { grid-column: span 12; }
+  .cell-c, .cell-d { grid-column: span 6; }
+  .cell-e { grid-column: span 12; }
+  .numbers { grid-template-columns: repeat(2, 1fr); gap: var(--space-4) 0; }
+  .number:nth-child(3) { border-left: 0; padding-left: 0; }
+  .row { grid-template-columns: 40px 1fr auto; grid-template-areas: "idx tag go" "idx title go" "idx body go"; row-gap: 4px; }
+  .row-idx { grid-area: idx; } .row h3 { grid-area: title; }
+  .row p { grid-area: body; } .row-tag { grid-area: tag; justify-self: end; } .row-go { grid-area: go; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .cell-c, .cell-d { grid-column: span 12; }
+  #wave { height: 150px; }
+  .row { padding: 20px 4px; }
+  .section { padding-block: var(--space-5); }
+}
+
+/* ---------------- reduced motion: meaning stays, travel goes ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .mask > span, .js .fade-in { animation: none; transform: none; opacity: 1; }
+  .js [data-reveal] { transition: none; opacity: 1; transform: none; }
+  .meter-fill { transition: none; }
+  .ticker-track { animation: none; }
+  .ticker-seq { flex-wrap: wrap; white-space: normal; }
+  .btn, .row h3, .row-go { transition: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#main" aria-label="oscilla home">
+      <svg class="brand-mark" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+        <rect x="1"  y="8" width="3" height="6"  rx="1" fill="#9AA78C"/>
+        <rect x="6"  y="5" width="3" height="12" rx="1" fill="#9AA78C"/>
+        <rect x="11" y="2" width="3" height="18" rx="1" fill="#C6F24E"/>
+        <rect x="16" y="5" width="3" height="12" rx="1" fill="#9AA78C"/>
+      </svg>
+      oscilla
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a class="nav-link" href="#quickstart">Product</a>
+      <a class="nav-link" href="#numbers">Numbers</a>
+      <a class="nav-link" href="#teams">Teams</a>
+      <a class="btn btn-fill btn-sm" href="#cta">Start building</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- hero -->
+  <section class="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow mono fade-in">realtime audio infrastructure</p>
+      <h1>
+        <span class="mask"><span style="--d:60ms">Your users talk.</span></span>
+        <span class="mask"><span style="--d:170ms">It lands in <span class="lime">31&nbsp;ms</span>.</span></span>
+      </h1>
+      <p class="lede fade-in" style="--d:340ms">
+        Oscilla is the realtime audio layer for voice agents, multiplayer games,
+        and live rooms. Four lines of code, fourteen regions, and one network
+        that treats latency as a bug.
+      </p>
+      <div class="hero-actions fade-in" style="--d:460ms">
+        <a class="btn btn-fill" href="#quickstart" data-magnet>Start building</a>
+        <a class="btn btn-ghost" href="#numbers">See the numbers <span class="arrow arrow-dn" aria-hidden="true">&darr;</span></a>
+      </div>
+      <p class="hero-status mono fade-in" style="--d:580ms">
+        <span>p50 <b>31 ms</b></span>
+        <span>p99 <b>84 ms</b></span>
+        <span><b>14</b> regions</span>
+        <span><b>99.99%</b> uptime</span>
+      </p>
+    </div>
+    <div class="wave-band fade-in" style="--d:700ms">
+      <canvas id="wave" role="img" aria-label="A live audio waveform that reacts to the cursor"></canvas>
+    </div>
+  </section>
+
+  <!-- ticker -->
+  <div class="ticker" aria-label="Teams building on oscilla">
+    <div class="ticker-track">
+      <div class="ticker-seq mono">
+        <span>casablanca.fm</span><i>/</i><span>helix games</span><i>/</i><span>northsea radio</span><i>/</i><span>tempo labs</span><i>/</i><span>vivid studios</span><i>/</i><span>quayside audio</span><i>/</i><span>ember fm</span><i>/</i><span>field &amp; signal</span><i>/</i><span>mono club</span><i>/</i><span>driftnet</span><i>/</i>
+      </div>
+      <div class="ticker-seq mono" aria-hidden="true">
+        <span>casablanca.fm</span><i>/</i><span>helix games</span><i>/</i><span>northsea radio</span><i>/</i><span>tempo labs</span><i>/</i><span>vivid studios</span><i>/</i><span>quayside audio</span><i>/</i><span>ember fm</span><i>/</i><span>field &amp; signal</span><i>/</i><span>mono club</span><i>/</i><span>driftnet</span><i>/</i>
+      </div>
+    </div>
+  </div>
+
+  <!-- quickstart bento -->
+  <section class="section" id="quickstart">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="sec-index mono">01</span>
+        <div>
+          <h2>Four lines to first sound.</h2>
+          <p class="sec-sub">The SDK speaks Opus, WebTransport, and plain WebAudio. Install, join, publish. Everything underneath is our problem.</p>
+        </div>
+      </div>
+      <div class="bento">
+        <div class="cell cell-a" data-reveal>
+          <div class="code-top">
+            <span class="code-file mono">quickstart.js</span>
+            <button class="copy-btn" type="button" data-copy aria-live="polite">copy</button>
+          </div>
+<pre id="quickstart-code"><span class="k">import</span> { Oscilla } <span class="k">from</span> <span class="s">"@oscilla/sdk"</span>;
+
+<span class="k">const</span> room = <span class="k">await</span> Oscilla.<span class="f">join</span>(<span class="s">"room_7f3k"</span>, { region: <span class="s">"auto"</span> });
+room.<span class="f">publish</span>(micStream);
+room.<span class="f">on</span>(<span class="s">"peer"</span>, (p) =&gt; p.stream.<span class="f">play</span>());</pre>
+          <p class="foot-note">Install with <code>npm i @oscilla/sdk</code>. The browser build is 11 kB gzipped and has no native dependency.</p>
+        </div>
+        <div class="cell cell-b" data-reveal style="--d:90ms">
+          <h3>Room levels, live.</h3>
+          <p class="cap">Every stream is metered at the edge. What you see is what the mixer sees.</p>
+          <canvas id="eq" role="img" aria-label="Animated level meters for a live audio room"></canvas>
+        </div>
+        <div class="cell cell-c" data-reveal>
+          <h3>Latency you can plan around.</h3>
+          <p class="cap">Measured hourly from public probes. When a number slips, we publish it anyway.</p>
+          <div class="meter-row" style="--w:18%"><span class="meter-label mono">same city</span><span class="meter-val">9 ms</span><span class="meter-track"><span class="meter-fill"></span></span></div>
+          <div class="meter-row" style="--w:44%"><span class="meter-label mono">transatlantic</span><span class="meter-val">31 ms</span><span class="meter-track"><span class="meter-fill"></span></span></div>
+          <div class="meter-row" style="--w:100%"><span class="meter-label mono">transpacific, p99</span><span class="meter-val">84 ms</span><span class="meter-track"><span class="meter-fill"></span></span></div>
+        </div>
+        <div class="cell cell-d" data-reveal style="--d:90ms">
+          <h3>Built for bad networks.</h3>
+          <ul class="tick-list">
+            <li>Jitter buffers retune themselves mid-call.</li>
+            <li>Comfort noise fills every dropped packet.</li>
+            <li>Bitrate slides down; the call keeps going.</li>
+            <li>Reconnects inherit the room, not the silence.</li>
+          </ul>
+        </div>
+        <div class="cell cell-e" data-reveal style="--d:180ms">
+          <h3>Fourteen regions, one address.</h3>
+          <p class="cap">Point at edge.oscilla.example and the network picks the door. No round-robins, no health-check scripts on your side.</p>
+          <div class="region-grid mono">
+            <span>ams</span><span>fra</span><span>lhr</span><span>cdg</span><span>iad</span><span>sfo</span><span>yyz</span><span>gru</span><span>bom</span><span>sin</span><span>nrt</span><span>syd</span><span>jnb</span><span>hnd</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- numbers -->
+  <section class="section" id="numbers">
+    <div class="wrap">
+      <div class="numbers" data-reveal>
+        <div class="number"><b><span data-count="31" data-dec="0">31</span><i>ms</i></b><span>p50, voice, transatlantic</span></div>
+        <div class="number"><b><span data-count="84" data-dec="0">84</span><i>ms</i></b><span>p99, voice, transpacific</span></div>
+        <div class="number"><b><span data-count="14" data-dec="0">14</span><i>&nbsp;</i></b><span>anycast regions</span></div>
+        <div class="number"><b><span data-count="99.99" data-dec="2">99.99</span><i>%</i></b><span>uptime, trailing 90 days</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- teams -->
+  <section class="section" id="teams">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="sec-index mono">02</span>
+        <div>
+          <h2>What teams ship on it.</h2>
+          <p class="sec-sub">Three shapes of product, one network. Each row is a pattern we support end to end.</p>
+        </div>
+      </div>
+      <a class="row" href="#cta" data-reveal>
+        <span class="row-idx mono">a</span>
+        <h3>Voice agents</h3>
+        <p>Agents that answer in 31 ms, so callers stop asking "are you still there". Barge-in, backchannel, and turn-taking come wired in.</p>
+        <span class="row-tag mono">agents</span>
+        <span class="row-go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="row" href="#cta" data-reveal style="--d:80ms">
+        <span class="row-idx mono">b</span>
+        <h3>Multiplayer games</h3>
+        <p>Footsteps, reloads, and callouts, positional and panned. Players hear the flank before they see it.</p>
+        <span class="row-tag mono">games</span>
+        <span class="row-go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="row" href="#cta" data-reveal style="--d:160ms">
+        <span class="row-idx mono">c</span>
+        <h3>Live rooms</h3>
+        <p>One host, ninety thousand listeners. The stream bends under congestion and never folds.</p>
+        <span class="row-tag mono">broadcast</span>
+        <span class="row-go" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- cta -->
+  <section class="section cta" id="cta">
+    <div class="wrap" data-reveal>
+      <h2>Ship your first call today.</h2>
+      <p>No card, no sales call. Ten thousand minutes a month on the free tier, and the same network the paid tiers use.</p>
+      <a class="btn btn-fill" href="#main" data-magnet>Create a free key</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#main">
+          <svg class="brand-mark" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+            <rect x="1"  y="8" width="3" height="6"  rx="1" fill="#9AA78C"/>
+            <rect x="6"  y="5" width="3" height="12" rx="1" fill="#9AA78C"/>
+            <rect x="11" y="2" width="3" height="18" rx="1" fill="#C6F24E"/>
+            <rect x="16" y="5" width="3" height="12" rx="1" fill="#9AA78C"/>
+          </svg>
+          oscilla
+        </a>
+        <p>The realtime audio layer for voice, games, and live rooms.</p>
+      </div>
+      <div class="foot-col">
+        <b class="mono">product</b>
+        <a href="#quickstart">Docs</a>
+        <a href="#numbers">Status</a>
+        <a href="#cta">Pricing</a>
+      </div>
+      <div class="foot-col">
+        <b class="mono">company</b>
+        <a href="#main">About</a>
+        <a href="#teams">Customers</a>
+        <a href="#cta">Careers</a>
+      </div>
+      <div class="foot-col">
+        <b class="mono">contact</b>
+        <a href="mailto:hello@oscilla.example">hello@oscilla.example</a>
+        <a href="#main">Press kit</a>
+      </div>
+    </div>
+    <div class="foot-base mono">
+      <span>oscilla is a fictional product, built as a working example for the slopless-ui skill.</span>
+      <span>set in Space Grotesk and IBM Plex Mono</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* scroll reveals */
+  var revealEls = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window && !reduced) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* count-up numbers */
+  var counters = document.querySelectorAll("[data-count]");
+  function runCounter(el) {
+    var end = parseFloat(el.getAttribute("data-count"));
+    var dec = parseInt(el.getAttribute("data-dec") || "0", 10);
+    var start = performance.now();
+    var dur = 1100;
+    function tick(now) {
+      var p = Math.min(1, (now - start) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (end * eased).toFixed(dec);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if ("IntersectionObserver" in window) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!reduced) runCounter(entry.target);
+          cio.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { cio.observe(el); });
+  }
+
+  /* shared visibility helper for canvases */
+  function onVisible(el, cb) {
+    if (!("IntersectionObserver" in window)) { cb(true); return; }
+    var o = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { cb(e.isIntersecting); });
+    }, { threshold: 0.05 });
+    o.observe(el);
+  }
+
+  /* hero waveform: the signature. It answers the cursor. */
+  var wave = document.getElementById("wave");
+  if (wave) {
+    var ctx = wave.getContext("2d");
+    var w = 0, h = 0, mx = -1, t0 = performance.now(), waveVisible = false, rafId = null;
+    function sizeWave() {
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = wave.clientWidth; h = wave.clientHeight;
+      wave.width = Math.max(1, w * dpr); wave.height = Math.max(1, h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawWave(reduced ? 0 : performance.now() - t0);
+    }
+    function drawWave(time) {
+      ctx.clearRect(0, 0, w, h);
+      var mid = h / 2;
+      for (var line = 0; line < 2; line++) {
+        ctx.beginPath();
+        ctx.strokeStyle = line === 0 ? "rgba(198,242,78,0.9)" : "rgba(198,242,78,0.22)";
+        ctx.lineWidth = 1.5;
+        for (var x = 0; x <= w; x += 3) {
+          var boost = mx >= 0 ? Math.exp(-Math.pow((x - mx) / 150, 2)) * 1.7 : 0;
+          var y = mid
+            + Math.sin(x * 0.012 - time * 0.0016 + line * 1.9) * h * 0.17 * (1 + boost)
+            + Math.sin(x * 0.031 + time * 0.0011) * h * 0.06 * (1 + boost * 0.5);
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+    }
+    function waveLoop() {
+      if (!waveVisible || document.hidden) { rafId = null; return; }
+      drawWave(performance.now() - t0);
+      rafId = requestAnimationFrame(waveLoop);
+    }
+    function wakeWave() {
+      if (reduced || rafId) return;
+      rafId = requestAnimationFrame(waveLoop);
+    }
+    wave.addEventListener("pointermove", function (e) {
+      var r = wave.getBoundingClientRect();
+      mx = e.clientX - r.left;
+      if (!reduced) wakeWave();
+    });
+    wave.addEventListener("pointerleave", function () { mx = -1; });
+    onVisible(wave, function (v) { waveVisible = v; if (v) wakeWave(); });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) wakeWave(); });
+    window.addEventListener("resize", sizeWave);
+    sizeWave();
+  }
+
+  /* room level meters */
+  var eq = document.getElementById("eq");
+  if (eq) {
+    var ectx = eq.getContext("2d");
+    var BARS = 26, targets = [], levels = [], lastShift = 0, eqVisible = false, eqRaf = null;
+    var ew = 0, eh = 0;
+    function retune() {
+      for (var i = 0; i < BARS; i++) targets[i] = 0.12 + Math.random() * 0.85;
+    }
+    function sizeEq() {
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      ew = eq.clientWidth; eh = eq.clientHeight;
+      eq.width = Math.max(1, ew * dpr); eq.height = Math.max(1, eh * dpr);
+      ectx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawEq(0);
+    }
+    function drawEq() {
+      ectx.clearRect(0, 0, ew, eh);
+      var gap = 4, bw = (ew - gap * (BARS - 1)) / BARS;
+      for (var i = 0; i < BARS; i++) {
+        levels[i] += (targets[i] - levels[i]) * 0.08;
+        var bh = Math.max(3, levels[i] * (eh - 8));
+        ectx.fillStyle = "rgba(198,242,78," + (0.35 + levels[i] * 0.6) + ")";
+        ectx.fillRect(i * (bw + gap), eh - bh, bw, bh);
+      }
+    }
+    function eqLoop(now) {
+      if (!eqVisible || document.hidden) { eqRaf = null; return; }
+      if (now - lastShift > 850) { retune(); lastShift = now; }
+      drawEq();
+      eqRaf = requestAnimationFrame(eqLoop);
+    }
+    function wakeEq() {
+      if (reduced || eqRaf) return;
+      eqRaf = requestAnimationFrame(eqLoop);
+    }
+    onVisible(eq, function (v) { eqVisible = v; if (v) wakeEq(); });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) wakeEq(); });
+    window.addEventListener("resize", sizeEq);
+    for (var i = 0; i < BARS; i++) { targets[i] = 0.5; levels[i] = 0.5; }
+    sizeEq();
+    if (reduced) { retune(); for (var j = 0; j < BARS; j++) levels[j] = targets[j]; drawEq(); }
+  }
+
+  /* copy button */
+  var copyBtn = document.querySelector("[data-copy]");
+  if (copyBtn) {
+    var snippet = document.getElementById("quickstart-code");
+    copyBtn.addEventListener("click", function () {
+      var text = snippet ? snippet.textContent : "";
+      var done = function () {
+        copyBtn.textContent = "copied";
+        copyBtn.classList.add("ok");
+        setTimeout(function () {
+          copyBtn.textContent = "copy";
+          copyBtn.classList.remove("ok");
+        }, 1600);
+      };
+      var fallback = function () {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); done(); }
+        catch (err) { copyBtn.textContent = "select it manually"; }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  }
+
+  /* magnetic buttons: a small pull toward the cursor, no library */
+  if (!reduced && window.matchMedia("(pointer: fine)").matches) {
+    document.querySelectorAll("[data-magnet]").forEach(function (el) {
+      var raf = null, x = 0, y = 0, tx = 0, ty = 0;
+      var step = function () {
+        x += (tx - x) * 0.16;
+        y += (ty - y) * 0.16;
+        el.style.transform = "translate(" + x.toFixed(2) + "px," + y.toFixed(2) + "px)";
+        if (Math.abs(tx - x) + Math.abs(ty - y) > 0.08) {
+          raf = requestAnimationFrame(step);
+        } else {
+          raf = null;
+          if (tx === 0 && ty === 0) el.style.transform = "";
+        }
+      };
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        tx = (e.clientX - r.left - r.width / 2) * 0.14;
+        ty = (e.clientY - r.top - r.height / 2) * 0.3;
+        if (!raf) raf = requestAnimationFrame(step);
+      });
+      el.addEventListener("pointerleave", function () {
+        tx = 0; ty = 0;
+        if (!raf) raf = requestAnimationFrame(step);
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

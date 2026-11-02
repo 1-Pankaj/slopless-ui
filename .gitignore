@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+*.swp
+.idea/
+.vscode/
+
+# Verification output (finish.mjs writes screenshots here by default)
+verify-out/
+
+# Local Playwright install, per CONTRIBUTING.md. The skill itself stays
+# zero-dependency: this footprint belongs to the machine that ran the
+# browser pass, not to the repository. If you ever adopt npm distribution,
+# stop ignoring package.json.
+node_modules/
+package.json
+package-lock.json
+npm-shrinkwrap.json
+npm-debug.log*
+
+# Playwright test-runner artifacts, if the runner is used locally
+playwright-report/
+test-results/
+blob-report/
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment files, as hygiene; the scripts make no network calls
+.env
+.env.*
+
+# Release zips are attached to GitHub Releases, never committed
+*.zip
