@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/squint.png" alt="A page finished with slopless-ui, seen thumbnail-sized so only the hierarchy remains" width="120" style="border-radius: 6px;">
+<img src="docs/squeegee-icon.jpg" alt="slopless-ui icon" width="128" style="border-radius: 16px;">
 
 # slopless-ui
 
@@ -15,6 +15,11 @@ verified finishing check before it dares to say the word "done".
 [![license](https://img.shields.io/badge/license-MIT-8E3B2F)](LICENSE)
 [![agent skills](https://img.shields.io/badge/agent%20skills-compatible-201B12)](https://agentskills.io)
 [![GitHub stars](https://img.shields.io/github/stars/1-pankaj/slopless-ui?style=flat&color=8E3B2F)](https://github.com/1-pankaj/slopless-ui/stargazers)
+
+<br/>
+<br/>
+
+<img src="docs/banner.png" alt="slopless-ui banner" width="100%" style="border-radius: 8px;">
 
 </div>
 
