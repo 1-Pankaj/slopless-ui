@@ -4,13 +4,6 @@ All notable changes to slopless-ui are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [SemVer](https://semver.org/).
 
-## [Unreleased]
-
-### Changed
-
-- README install section rewritten: the registry command first, a manual
-  route and a directory table second, no narration.
-
 ## [1.1.0] - 2026-11-02
 
 The motion release. The skill now treats motion as a first-class craft axis
@@ -31,6 +24,12 @@ editorial register to the modern one.
   removing travel.
 - `SKILL.md` now requires a motion pass as part of finishing, and bans the
   fully static page alongside the other machine-made patterns.
+- README install section rewritten: the registry command first, a manual
+  route and a directory table second, no narration.
+- examples/README.md claims corrected to measured values: the finished
+  pages' inline scripts bound at 209 lines, and the only external requests
+  named as Google Fonts.
+- A before-page placeholder email moved to the reserved .example domain.
 - `references/direction.md` gains "The modern register": confident scale, a
   pulse, asymmetry on purpose, real content density. Print-flavored devices
   stay available as deliberate choices, not defaults. The example design

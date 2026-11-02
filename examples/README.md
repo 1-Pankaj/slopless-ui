@@ -1,6 +1,6 @@
 # The examples
 
-Three fictional businesses, each built twice: once the way a competent unguided model writes today, once with this skill. Each pair is a single self-contained HTML file. The finished pages ship one small dependency-free script, 150 lines or fewer, for their signature motion. No frameworks, no build step, and no assets beyond two font families.
+Three fictional businesses, each built twice: once the way a competent unguided model writes today, once with this skill. Each pair is a single self-contained HTML file. The finished pages ship their signature motion as one dependency-free inline script; the longest is 209 lines. No frameworks, no build step, and the only external requests are Google Fonts.
 
 | Pair | Category | Mode | Direction, adapted |
 |---|---|---|---|
