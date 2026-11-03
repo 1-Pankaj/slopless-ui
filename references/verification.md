@@ -8,11 +8,11 @@ Code that looks right in the editor often renders wrong: overflow, clipped text,
 
 ## Honesty labels
 
-End every piece of UI work with exactly one of these labels, and never claim more:
+End every piece of UI work with exactly one of these labels, and never claim more. The report's last line is the label, verbatim:
 
-- **Verified visually:** rendered in a real browser, screenshots inspected at desktop and phone widths.
-- **Verified statically:** scripts run and code reviewed, but no browser was available. Say why.
-- **Not verified:** neither happened. Rare, and it must say why.
+- `verification: verified visually`: rendered in a real browser, screenshots inspected at desktop and phone widths.
+- `verification: verified statically (no browser available)`: scripts run and code reviewed, but no browser was available.
+- `verification: not verified: <reason>`: neither happened. Rare, and the reason is mandatory.
 
 Never describe work as "pixel-perfect" or "fully tested". Say what you did.
 
@@ -36,13 +36,9 @@ Body text needs 4.5:1 or better. Large text (24px and up, or 19px bold and up) a
 
 ### 3. Render and screenshot
 
-If Playwright is available:
+Use the browser tool the environment provides first: a built-in agent browser (several agent IDEs drive one), a headless CLI, or a dev server plus screenshots. `node scripts/finish.mjs ./index.html` is the fallback when the host has no browser tool and Playwright is installed.
 
-```bash
-node scripts/finish.mjs ./index.html        # or a URL
-```
-
-It screenshots at 1440px and 390px, collects console errors, page errors, and failed requests, and fails on horizontal overflow. Otherwise use whatever browser tool the environment provides: a built-in agent browser, a headless CLI, a dev server plus screenshots. The point is looking, not the tool.
+finish.mjs screenshots at 1440px and 390px, collects console errors, page errors, and failed requests, and fails on horizontal overflow. Whatever tool you use, the two screenshots are required, and the phone shot gets checked for horizontal overflow by eye. The point is looking, not the tool.
 
 Start the dev server if the project has one (`package.json` scripts), or serve static files (`python3 -m http.server`), or open the file directly.
 
@@ -74,4 +70,4 @@ Last, before the report: look at the final screenshot as a stranger would, for t
 
 ## Reporting
 
-Eight lines or fewer: what was built, the feeling from the brief, the honesty label and how it was earned, what was fixed, what remains and why, what could not be checked.
+Eight lines or fewer: what was built, the feeling from the brief, what the pass actually ran, what was fixed, what remains and why, what could not be checked. The last line is the verbatim label from the honesty labels above.

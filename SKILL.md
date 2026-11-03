@@ -1,15 +1,35 @@
 ---
 name: slopless-ui
-description: Design direction and finishing standard for user interfaces. Use when building, restyling, or reviewing anything a person will see, such as pages, landing sites, dashboards, forms, components, app screens, emails, or themes, and always before presenting designed work to the user. Sets a written design brief, picks from a library of twenty-eight style directions across website categories, applies the layout, spacing, and hierarchy laws real design systems run on, choreographs motion with the same discipline (entrances, scroll reveals, press feedback, one signature ambient, reduced-motion fallbacks), keeps copy plain and humanized with no em dashes, and finishes with a verified browser pass that blocks machine-generated patterns like blinking dots, gradient heroes, cyberpunk styling, and icon soup.
+description: Design direction, build discipline, and a verified finishing pass for any interface a person will see: pages, landing sites, dashboards, forms, components, app screens, emails, themes. Use it for every build or change that touches what the user sees, including small requests like changing colors, tweaking spacing or fonts, polishing a page, fixing responsiveness, or making it look modern. Use it too when the user says a page looks bad, generic, boring, template-made, or machine-made, or asks for a redesign or a review. A recolor-only change is a failed pass; a restyle means a new brief, a named direction, at least two structural changes, and the full finishing pass. The method: a four-line brief, decisions as tokens, layout and hierarchy laws, then foldcheck, contrast checks, and browser screenshots at desktop and phone widths before anything is presented.
 license: MIT
 compatibility: Agent Skills standard. Works in any agent that reads SKILL.md folders. Scripts are zero-dependency Python 3.8 or newer; the optional browser pass uses Node 18 or newer with Playwright.
 ---
 
 # Slopless UI
 
-Slop is the machine-made look: the default gradient hero, the pulsing dot, an icon on every heading, a button on every action, copy full of em dashes and adjectives, and no decision anywhere you could defend in a review. Modern generated interfaces rarely fail on broken markup. They fail on being interchangeable: competent, polished, and impossible to remember.
+This skill is a procedure, not an opinion. While it is active you owe five observable artifacts, and presenting work without them is a failed run no matter how good the page looks:
 
-This skill exists so an agent's output is not. It gives the build a written direction before any code, discipline while building, and a verification pass before showing anyone the result. It does not add more styling. It adds decisions, then finishes.
+1. **The brief.** Four written lines (audience, feeling, signature, mode) in the chat and as a comment in the delivered file, before any code.
+2. **A named direction.** Chosen from references/direction.md and recorded in the brief. "Clean and modern" is not a direction.
+3. **The foldcheck output.** For every file you changed, pasted into the chat. A gate that ran silently did not run.
+4. **Screenshots.** Desktop (1440) and phone (390) widths, from a real browser: the browser tool your environment provides first, `node scripts/finish.mjs` second. Squint them yourself before anyone else does.
+5. **The label.** The report's last line, verbatim, one of:
+   `verification: verified visually`
+   `verification: verified statically (no browser available)`
+   `verification: not verified: <reason>`
+
+If you skip an artifact, name the skip and the reason in the report. Silent skipping is how slop happens.
+
+Slop is the machine-made look: the default gradient hero, an icon on every heading, a button on every action, copy full of em dashes and adjectives. Generated interfaces rarely fail on broken markup anymore. They fail on being interchangeable: competent, polished, impossible to remember. This skill exists so an agent's output is not. It does not add more styling. It adds decisions, a pulse, and discipline, and then it checks the result.
+
+## Which path are you on
+
+Pick one before anything else. It decides how much of the method runs.
+
+- **A new page, screen, or component.** The full method, steps 1 through 5.
+- **A restyle.** Anything that asks for the page to look different or better: redesign, modernize, "make it pop", and yes, "just change the colors". The full method still runs: a new brief, a new named direction, at least two structural changes (hierarchy, layout, spacing rhythm, motion, or composition), then the whole finishing pass. Recoloring alone is a failed pass.
+- **A small fix inside an existing design.** A bug, a broken state, one cramped section. Keep the existing system, touch only what the fix needs, and still run foldcheck and give the label.
+- **A review, nothing to change.** Run foldcheck, look at screenshots if you can, and report findings ranked must, should, nice. Do not rewrite anything unless asked.
 
 ## The method
 
@@ -28,11 +48,15 @@ Four lines, written down before any code. They are a contract with yourself, and
 3. **Signature**: the one thing a stranger will remember. If you cannot name it, the result will be generic. Pick one: an unusual typeface, one bold number, one unexpected color, one strong composition.
 4. **Mode**: Persuade (landing, pricing), Operate (dashboard, app), Read (docs, article), or Experience (portfolio, gallery). Mode changes every later decision.
 
+One filled in, so the shape is unambiguous: `Audience: clinic front-desk staff checking today's queue. Feeling: calm, exact. Signature: the wait time as a huge readable number. Mode: Operate.`
+
 Full guidance, the four modes, and a library of twenty-eight starting directions for common website categories: [references/direction.md](references/direction.md).
 
 ### 3. Make the decisions as tokens
 
 Turn the brief into real values, not adjectives: two font families with weights and a fallback stack, one accent color with a job, a spacing scale, a radius scale, motion durations and easings. Write them as CSS variables or the framework's token format. "Clean and modern" is not a decision. `--accent: #8E3B2F` is.
+
+Restyling is not recoloring. A requested restyle changes at least two of: type hierarchy, layout or grid, spacing rhythm, motion, or the focal composition. Color alone is a failed pass unless the brief says, in one line, why this page needs color and nothing else.
 
 - Typography: [references/typography.md](references/typography.md)
 - Color: [references/color.md](references/color.md)
@@ -43,6 +67,7 @@ Turn the brief into real values, not adjectives: two font families with weights 
 Then apply the discipline rules while building:
 
 - **The laws come first.** One grid, one column, 4 or 8 point spacing, one focal point per view, all eight component states, keyboard and contrast floors. These are not style; they are the physics every design system agrees on: [references/foundations.md](references/foundations.md).
+- **Responsive is the build, not the patch.** Phone layout first: a single column with no media query, then `min-width` layers as content needs room, a fluid `clamp()` type scale, 44px touch targets, `min-width: 0` on every grid child. The mechanics and the computed scale: [references/foundations.md](references/foundations.md).
 - **One focal point, one primary action per view.** Hierarchy comes from size, weight, and space, not from boxes.
 - **Buttons are commitments.** One filled button per view is normal. Secondary actions are links or quiet buttons. If a region shows more than two buttons, redesign it: [references/icons-and-buttons.md](references/icons-and-buttons.md).
 - **Icons are furniture.** Words are clearer. When icons earn a place, one set, one weight, consistent size: [references/icons-and-buttons.md](references/icons-and-buttons.md).
@@ -55,11 +80,20 @@ Then apply the discipline rules while building:
 
 Never present UI that you have not looked at. The finishing pass, in order:
 
-1. `python3 scripts/foldcheck.py <changed files>` and fix every error it reports.
+1. `python3 scripts/foldcheck.py <changed files>`, fix every error, and paste the output into the chat. If you cannot run it, say so; do not pretend it ran.
 2. `python3 scripts/contrast.py <foreground> <background>` for every text pair you introduced. Body text needs 4.5:1 or better; large text and boundaries need 3:1.
-3. Render in a real browser and screenshot at desktop and phone widths (`node scripts/finish.mjs <url-or-file>` if Playwright is available, otherwise whatever browser tool your environment provides).
-4. Squint the screenshots: blur your eyes or scale the image down. The hierarchy and focal point must survive.
+3. Screenshot at desktop (1440) and phone (390) widths. Use the browser tool your environment provides first; `node scripts/finish.mjs <url-or-file>` is the fallback. Check the phone shot for horizontal overflow. No browser anywhere means the label is "verified statically" at best.
+4. Squint the screenshots: blur your eyes or scale them down. The focal point, reading order, and primary action must survive.
 5. Fix, re-check the changed views only, and stop after three fix passes.
+
+Copy this checklist into your working notes and tick items as you complete them:
+
+- [ ] foldcheck run on every changed file, output pasted, all errors fixed
+- [ ] contrast measured for every text pair I introduced
+- [ ] desktop screenshot (1440) taken and actually looked at
+- [ ] phone screenshot (390) taken, no horizontal overflow
+- [ ] squint test passed: focal point, reading order, and primary action survive
+- [ ] report ends with the verification label, verbatim
 
 Full protocol, honesty labels, and reporting format: [references/verification.md](references/verification.md).
 
@@ -78,6 +112,10 @@ These patterns read as machine-made. Treat them as banned by default, even when 
 - A page that never moves. Static output reads as an assembled template; the motion budget in [references/motion.md](references/motion.md) is part of finishing, not garnish.
 
 The full catalogue with fixes: [references/anti-slop.md](references/anti-slop.md).
+
+## What failure looks like
+
+The common failure is the recolor: layout untouched, palette swapped, "done". That is a failed pass. The artifacts are how you catch it in yourself: if the brief was never written, the direction never named, or foldcheck never pasted, the skill did not run. The same honesty applies to responsiveness: if you never looked at the 390px screenshot, you do not know whether the page works, and the label must say so.
 
 ## The squint test
 
@@ -103,7 +141,7 @@ Sometimes a person genuinely wants neon, heavy gradients, or a cyberpunk theme. 
 
 ## Reporting
 
-End UI work with a short report: what was built, the brief's one-line feeling, the verification label from [references/verification.md](references/verification.md) (verified visually, verified statically, or not verified, with the reason), and anything left undone. Never call a result "pixel-perfect" or "fully tested". Say what you did.
+End UI work with a short report: what was built, the brief's one-line feeling, what the finishing pass actually ran, what was fixed, and anything left undone. The last line is the label, verbatim: `verification: verified visually`, `verification: verified statically (no browser available)`, or `verification: not verified: <reason>`. Never call a result "pixel-perfect" or "fully tested". Say what you did.
 
 ## Scripts
 

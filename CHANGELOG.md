@@ -4,6 +4,42 @@ All notable changes to slopless-ui are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows
 [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- SKILL.md now opens with a contract: five observable artifacts (the brief, a
+  named direction, pasted foldcheck output, screenshots, a verification label)
+  that separate a real run from a skimmed one. The finishing pass prefers the
+  host's own browser tool over Playwright, requires the 390px screenshot, and
+  the honesty label is a literal last-line string so a skipped verification
+  cannot pass silently.
+- `references/verification.md` matches the contract: the labels are literal
+  strings, the host's browser tool comes first, and `finish.mjs` is the
+  fallback.
+- A responsive build system in `references/foundations.md`: phone-first
+  defaults, a computed fluid type and spacing scale (`clamp()`, interpolated
+  390 to 1440), content-driven breakpoints, layout primitives that survive
+  resizing (`auto-fit`, `min-width: 0`, `overflow-wrap`), touch rules, table
+  and navigation patterns, and container queries for components. The
+  finishing pass already demanded the 390px screenshot; the build phase now
+  teaches how to earn it.
+- A "Which path are you on" decision tree routes every request before work
+  starts: new pages run the full method, restyles (including "just change the
+  colors") run it at restyle depth, small fixes stay small but still verify,
+  and reviews report without rewriting.
+- A restyle rule: changing only colors is a failed pass unless the brief
+  argues why the page needs color alone. A "What failure looks like" section
+  names the recolor as the standard failure.
+- The brief gained a filled example, and the finishing pass gained a copy-off
+  checklist (foldcheck, contrast, both screenshots, squint test, label) so
+  the expected output shape is unambiguous.
+- The frontmatter description is retuned for triggering: it now matches the
+  small requests that used to fall through to a bare recolor ("change the
+  colors", "tweak spacing", "polish", "fix responsiveness", "make it look
+  modern") and states the recolor rule before the skill is even opened.
+- The unused `docs/squint.png` is removed.
+
 ## [1.1.0] - 2026-11-02
 
 The motion release. The skill now treats motion as a first-class craft axis

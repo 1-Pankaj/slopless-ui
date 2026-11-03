@@ -60,6 +60,38 @@ The long-content state is ninth: the table with 400 rows, the heading that wraps
 - **Z-index is a scale, not a number salad.** Three or four named tiers (base, raised, overlay, toast) defined as tokens. Two hundred unspecified z-indexes is how dropdowns end up under modals.
 - **Dark mode is a translation.** See rule 6 in [color.md](color.md). Shadows stop working on dark backgrounds; borders and surface lightness take over.
 
+## Responsive: the page must survive the phone
+
+The desktop shot is where you design; the 390px shot is where you find out. This is a build rule, not a finishing step: the cheapest responsive page is written phone-first, and a page that only works at 1440px is half a page.
+
+- **Viewport meta, always, before any CSS.** `<meta name="viewport" content="width=device-width, initial-scale=1">`. Without it, phones render the page at 980px and shrink it; nothing else in this section matters. It is the single most common missing line in generated pages.
+- **Phone layout is the default; desktop is the enhancement.** Write the single-column layout with no media query, then add `@media (min-width: ...)` layers as content needs room. A desktop-first page gets reworked to pass the phone shot; a phone-first page passes it by construction.
+- **Type and space scale with the viewport, not in jumps.** A `clamp()` fluid scale interpolates between the phone size and the desktop size, so no breakpoint decides type. The scale below is computed for 390 to 1440 (the standard interpolation technique; the numbers are measured, not guessed):
+
+```css
+/* type: 13->14, 16->18, 18->22, 22->28, 27->38, 34->54, 42->74 px */
+--step--1: clamp(0.8333rem, 0.809rem + 0.102vw, 0.9rem);
+--step-0:  clamp(1rem,      0.954rem + 0.19vw,  1.125rem);
+--step-1:  clamp(1.125rem,  1.023rem + 0.419vw, 1.4rem);
+--step-2:  clamp(1.35rem,   1.201rem + 0.61vw,  1.75rem);
+--step-3:  clamp(1.7rem,    1.44rem + 1.067vw,  2.4rem);
+--step-4:  clamp(2.1rem,    1.617rem + 1.981vw, 3.4rem);
+--step-5:  clamp(2.6rem,    1.857rem + 3.048vw, 4.6rem);
+/* space: 16->20, 24->32, 48->80 px */
+--space-gutter:  clamp(1rem, 0.907rem + 0.381vw, 1.25rem);
+--space-gap:     clamp(1.5rem, 1.314rem + 0.762vw, 2rem);
+--space-section: clamp(3rem, 2.257rem + 3.048vw, 5rem);
+```
+
+  Body text sits on `--step-0`; the display line on `--step-4` or `--step-5`. Between the smallest and largest viewport, every size between the two numbers is correct; nothing waits for a breakpoint to become readable.
+- **Few breakpoints, content-driven.** Add one when the content forces it: a row stops fitting, the nav stops fitting. Two or three named breakpoints is normal; twenty is indecision. A sane default set on top of the phone layout: `48rem` (768px) and `69rem` (1104px). Never write a device name into a query.
+- **Layouts that survive resizing.** Card grids: `repeat(auto-fit, minmax(min(260px, 100%), 1fr))` wraps with no breakpoint. Flex rows wrap. Every grid or flex child gets `min-width: 0` so long content blows out the child, not the page. Long words and URLs get `overflow-wrap: anywhere`.
+- **Touch is not a small cursor.** Targets at least 44 by 44 pixels with room between them (Fitts's law, table above). Form inputs carry `font-size: 16px` or iOS zooms the page on focus. Anything that only appears on hover needs a touch and a keyboard equivalent.
+- **Media shrinks; tables wrap.** Images and video: `max-width: 100%`, explicit width and height so nothing shifts on arrival. Data tables either scroll inside their own wrapper (the page never scrolls sideways) or collapse to stacked rows on the phone.
+- **Navigation collapses on purpose.** Five to seven links become a disclosure menu under the first breakpoint; the primary action stays visible with or without JavaScript. A hamburger that does nothing without JS is a broken page.
+- **Component level, prefer container queries.** A card that adapts to its slot (`container-type: inline-size`, then `@container`) survives being placed in a narrow column; a media query only knows the screen.
+- **Test where it breaks.** 390 and 1440 are the required shots in the finishing pass; 768 is the cheap third. Horizontal overflow at 390px is a bug, not a style.
+
 ## Motion physics (summary; full rules in [motion.md](motion.md))
 
 - Transform and opacity only. 100 to 200ms for hover and focus, 240 to 400ms for entrances with a strong ease-out, exits faster than entrances, nothing loops unless it reports a real state, and the reduced-motion fallback ships every time.
