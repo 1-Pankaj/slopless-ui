@@ -36,3 +36,6 @@ __pycache__/
 
 # Release zips are attached to GitHub Releases, never committed
 *.zip
+
+# Local research input supplied for this revision, not part of the skill bundle
+Slopless_UI_Research_Implementation_Report.pdf

@@ -1,6 +1,6 @@
 # Color
 
-Color is a decision about what matters. A palette is not a set of pretty swatches; it is a budget that says where attention goes. Open this at step 3.
+Color helps communicate identity, hierarchy, state, and relationships. Use this reference when creating or reviewing a palette; existing brand and product tokens take precedence.
 
 ## Contents
 
@@ -12,33 +12,30 @@ Color is a decision about what matters. A palette is not a set of pretty swatche
 
 ## The structure
 
-Every palette in this skill has six roles. Keep the roles even when you change every hue:
+The palettes below organize a useful set of semantic roles. Use the roles that fit the interface; they are not a required six-color recipe:
 
 | Role | Job |
 |---|---|
 | Background | The page. Usually the largest area by far. |
 | Surface | Cards, panels, raised blocks. A step above the background. |
-| Ink | Body text and headings. Near-black, tinted, never pure `#000`. |
-| Muted ink | Captions, secondary text. Must still pass 4.5:1. |
-| Accent | The primary action and key emphasis. Gets one job. |
+| Ink | Body text and headings; choose for the brand and applicable contrast. |
+| Muted ink | Captions and secondary text; check the applicable contrast criterion. |
+| Accent | An emphasis role; it may support several related actions or states. |
 | Accent ink | The text color that sits on the accent. |
 
-Budget roughly: 60 percent background, 30 percent ink and surface, 10 percent accent or less. An accent that appears everywhere stops being an accent.
+Treat area proportions as a composition tool, not a fixed ratio. Reserve emphasis color for elements whose role warrants it.
 
 ## Rules
 
-1. **Tint the neutrals.** Pure gray is a default. Warm neutrals (a touch of yellow or red) feel like paper and wood; cool neutrals (a touch of blue or green) feel like glass and steel. Choose on purpose and never mix warm and cool grays in one palette.
-2. **Anchor the palette in a material.** Paper, clay, slate, moss, brass, sea foam. Material names keep hues honest; "vibrant" does not. This is also how you surprise: a harbor buoy orange, a bottle of oxblood ink, a patina green.
-3. **One accent, one job.** Primary action, active state, the one number that matters. If a fourth element needs emphasis, the hierarchy is wrong, not the accent count.
-4. **Contrast is not optional.** Body text at least 4.5:1 against its background, large text (24px or 19px bold and up) and UI boundaries at least 3:1. Gray text on colored panels almost always fails. Measure with `python3 scripts/contrast.py "<fg>" "<bg>"` instead of guessing.
-5. **State colors are semantic and calm.** Success, warning, and danger appear only for meaning, always paired with text or an icon, never as the only signal. They do not glow.
-6. **Dark mode is a translation, not an inversion.** Tinted dark neutrals (never pure black), surfaces rise by lightness, the accent keeps its hue but often loses saturation, and text is warm white rather than white. Re-check every pair.
-7. **Gradients imitate material or they do not ship.** A barely visible light-on-paper shift can pass. A hue-to-hue banner, gradient text, and blurred color orbs cannot. If you cannot name the material the gradient imitates, delete it.
-8. **The accent must survive its job.** Test the accent as button fill (accent ink on accent) and as text (accent on background). If either fails, adjust the accent, not the threshold.
+1. **Connect color to the product.** Brand, content, setting, user expectations, and state are useful sources. Material metaphors can help, but are optional.
+2. **Use semantic roles.** Define foreground, surface, border, emphasis, and state colors as the interface needs. Allow several emphasis colors when hierarchy and meaning call for them.
+3. **Check contrast against the applicable standard.** WCAG 2.2 AA requires 4.5:1 for normal text and 3:1 for large text; non-text contrast has its own scope and exceptions. Use `contrast.py` as a calculation aid, not a conformance verdict.
+4. **Do not convey state with color alone.** Pair color with text, shape, icon, or another perceivable cue where needed.
+5. **Treat gradients, transparency, and dark surfaces as design choices.** Check legibility, context, performance, and product fit in rendered states. None is inherently a defect.
 
 ## Authored palettes
 
-Twenty starting palettes, none of them a default framework palette, all contrast-checked with the bundled script. Every ink-to-background pair below is 4.5:1 or better; where an accent sits below 4.5:1 against its background, the palette says so and restricts the accent to fills and large display text (3:1 or better, never body copy). The numbers shown are real, and the repository's test suite re-computes them from these tables so they cannot drift. Swap hues freely, keep the ratios.
+The authored palettes below are optional starting points, not a recommendation to avoid framework or brand colors. Their documented pair ratios are recalculated by the repository test suite; test any adapted or newly introduced pair in its real context.
 
 ### 1. Ledger
 Warm paper and oxblood ink. Editorial, exact, trustworthy. Modes: Read, Persuade.
@@ -322,8 +319,8 @@ Ink on background: 17.0:1. Muted on background: 7.0:1. Accent on background: 12.
 
 ## Adapting a palette
 
-1. Keep the six roles. If you need status colors, add them in the accent's saturation family and check them against the background too.
-2. Swap the hue, keep the ratios. Any hue works if the numbers hold.
+1. Keep the semantic distinctions your interface needs; add or remove roles as the product requires.
+2. Recheck all changed pairs. A passing ratio does not ensure that two colors communicate distinct meanings.
 3. Pull from physical sources: packaging, transit signage, book covers, banknotes, tools. Not from other websites' heroes.
 4. Dark variants: keep the accent hue, drop saturation 10 to 20 percent, darken the background, and re-run every pair through the contrast script.
 
@@ -341,5 +338,5 @@ Ink on background: 17.0:1. Muted on background: 7.0:1. Accent on background: 12.
 - Sports and competition: Scoreboard.
 - Travel and maps: Atlas.
 - Editorial with attitude: Zine.
-- Kids and family: Crayon, held to one accent.
+- Kids and family: Crayon.
 - If the brand already has colors, use them and enforce the structure and the contrast floor.

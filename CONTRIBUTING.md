@@ -1,40 +1,27 @@
 # Contributing
 
-Small, sharp changes are welcome. This document is short on purpose.
+Small, focused changes are welcome. This project aims to help agents make product-specific decisions, not add another fixed visual template.
 
 ## House rules
 
-1. **Every new foldcheck rule ships with a fixture.** Add a file to
-   `tests/fixtures/` that triggers the rule (or, for negative cases, a file
-   that must stay clean) and extend `tests/run_tests.sh`. A rule without a
-   fixture will misfire eventually.
-2. **Prefer `warn` for new rules.** Promote a rule to `error` only after it
-   has proven itself: you have run it on real projects and it has misfired at
-   most once.
-3. **Every contrast number in the docs comes from the script.** If you change
-   a palette, run `python3 scripts/contrast.py` on every pair and paste the
-   real numbers. Never estimate.
-4. **One skill, one job.** SKILL.md holds the method; references hold depth;
-   scripts hold mechanics. If a change makes SKILL.md longer, ask what can
-   move to a reference instead.
-5. **The repo follows its own rules.** No em dashes anywhere in this
-   repository's text (CI checks; fixtures are the only exception), no emoji in
-   documentation, no lorem ipsum, no invented numbers.
-6. **Zero dependencies.** The Python scripts use the standard library only.
-   `finish.mjs` treats Playwright as an optional, explicitly installed peer.
+1. Every new `foldcheck.py` rule needs a fixture and a test. Document likely false positives.
+2. Use `info` or `warn` for contextual visual patterns. Reserve errors for findings that indicate a likely implementation or content defect.
+3. Generate documented contrast ratios with `scripts/contrast.py`; do not estimate them.
+4. Keep `SKILL.md` focused on the reusable workflow. Put substantial guidance in a linked reference and deterministic mechanics in scripts.
+5. Treat examples and style guidance as options. Do not claim that illustrative examples or passing scripts prove the skill improves design quality.
+6. Python scripts use the standard library. `finish.mjs` uses Playwright only when it has been installed by the project.
 
 ## Local development
 
 ```bash
-bash tests/run_tests.sh        # the full suite, 29 checks
+bash tests/run_tests.sh
 python3 scripts/foldcheck.py --rules
-python3 scripts/foldcheck.py examples/oscilla/index.html   # the finished page passes
-python3 scripts/foldcheck.py examples/oscilla/before.html  # the before page fails, on real patterns
+python3 scripts/foldcheck.py examples/oscilla/index.html
 python3 scripts/contrast.py "#201B12" "#F6F1E5"
-python3 tests/check_ratios.py  # re-computes every ratio documented in color.md
+python3 tests/check_ratios.py
 ```
 
-To verify the example in a browser:
+To inspect an example in a browser, install Playwright in the project and run:
 
 ```bash
 npm i -D playwright && npx playwright install chromium
@@ -43,22 +30,10 @@ node scripts/finish.mjs examples/oscilla/index.html
 
 ## Sending a change
 
-Open an issue first for anything that changes the method, the non-negotiables,
-or the meaning of an existing rule. Pull requests should keep the suite green
-and update `CHANGELOG.md` under a new "Unreleased" heading.
+Method changes should include the reason and the behavior they are intended to improve. Update the tests and docs when a script or reference changes. Pull requests should keep the suite green and update `CHANGELOG.md` under an Unreleased heading.
 
 ## Cutting a release
 
-1. Update the version badge in `README.md` and give `CHANGELOG.md` its new
-   dated section.
-2. Run the full suite. It must pass with zero failures.
-3. Tag and publish:
-
-```bash
-git tag -a vX.Y.Z -m "slopless-ui vX.Y.Z"
-git push origin vX.Y.Z
-```
-
-4. Create the GitHub Release from the tag, paste the matching CHANGELOG
-   section into the notes, and attach the release zip (built without
-   `__pycache__` and any local verification output).
+1. Update version metadata and add a dated changelog section.
+2. Run the full suite and review the final diff.
+3. Tag and publish the release from the repository's release workflow.

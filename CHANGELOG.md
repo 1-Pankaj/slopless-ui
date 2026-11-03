@@ -8,26 +8,10 @@ All notable changes to slopless-ui are documented here. The format follows
 
 ### Changed
 
-- SKILL.md now opens with a contract: five observable artifacts (the brief, a
-  named direction, pasted foldcheck output, screenshots, a verification label)
-  that separate a real run from a skimmed one. The finishing pass prefers the
-  host's own browser tool over Playwright, requires the 390px screenshot, and
-  the honesty label is a literal last-line string so a skipped verification
-  cannot pass silently.
-- `references/verification.md` matches the contract: the labels are literal
-  strings, the host's browser tool comes first, and `finish.mjs` is the
-  fallback.
-- A responsive build system in `references/foundations.md`: phone-first
-  defaults, a computed fluid type and spacing scale (`clamp()`, interpolated
-  390 to 1440), content-driven breakpoints, layout primitives that survive
-  resizing (`auto-fit`, `min-width: 0`, `overflow-wrap`), touch rules, table
-  and navigation patterns, and container queries for components. The
-  finishing pass already demanded the 390px screenshot; the build phase now
-  teaches how to earn it.
-- A "Which path are you on" decision tree routes every request before work
-  starts: new pages run the full method, restyles (including "just change the
-  colors") run it at restyle depth, small fixes stay small but still verify,
-  and reviews report without rewriting.
+- Reframed the skill around product understanding, task-specific hierarchy, real content and behavior, and task-scaled verification.
+- Replaced mandatory style prohibitions with contextual review cues; visual choices are evaluated against the product and user task.
+- Reworked `foldcheck.py` so visual preferences are informational rather than build failures, and added tests to guard that behavior.
+- Added responsive/accessibility guidance and a controlled evaluation protocol; corrected README and contributor docs to describe the project's evidence honestly.
 - A restyle rule: changing only colors is a failed pass unless the brief
   argues why the page needs color alone. A "What failure looks like" section
   names the recolor as the standard failure.

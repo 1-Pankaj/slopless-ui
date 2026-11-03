@@ -1,6 +1,6 @@
 # Typography
 
-Type is the interface. Before color, before layout, a page is typography: size, weight, width, and rhythm decide whether it feels designed or assembled. Open this at step 3.
+Typography affects voice, hierarchy, readability, and density. Use this reference when choosing or reviewing a type system; existing product conventions take precedence.
 
 ## Contents
 
@@ -13,19 +13,19 @@ Type is the interface. Before color, before layout, a page is typography: size, 
 
 ## License discipline
 
-Recommend and load only fonts with licenses that permit free commercial use and redistribution: SIL Open Font License (OFL) or Apache. Every family named in this file was verified, in November 2026, against the canonical google/fonts repository (github.com/google/fonts), where each family carries a `METADATA.pb` declaring `license: "OFL"`. To re-verify a family, open `https://github.com/google/fonts/tree/main/ofl/<family-name>` and read the license line. When a project brings its own brand font, use it and stop. Never hotlink fonts from random CDNs, never bundle font files without their license file, and never ship a font you cannot name the license of.
+Use fonts whose license and delivery terms fit the project. The families listed here were checked in November 2026 against the Google Fonts repository as OFL. Before shipping any font, verify its current license and the terms for self-hosting or serving it through a provider. When a project supplies a brand font, follow its approved usage and stop treating this list as a requirement.
 
-## The two-voice rule
+## Typeface roles
 
-Use at most two families: a display voice with character for headings, and a workhorse voice for body and UI. Two weights each is a normal budget; five is a redesign waiting to happen. One family doing both jobs is also fine when the family has a real weight range.
+One family can serve the whole interface, or distinct families can serve different roles. Choose based on the product voice, readability, available weights, language coverage, rendering, licensing, and performance. More families and weights add cost and should have a clear purpose, but there is no universal family limit.
 
-- Inter, Roboto, Arial, and the system stack are fine as body faces. As the identity font they are the fastest way to look generated. If you must use one, pair it with a display face that carries the personality.
-- System fonts are acceptable for internal tools where speed beats voice, and always as fallbacks.
+- Familiar families including Inter, Roboto, Arial, and system fonts can be appropriate when they suit the product, platform, or performance constraints. A typeface alone does not make an interface generic.
+- System fonts are useful both as deliberate choices and as fallbacks.
 - Display faces live at large sizes. Many are single-weight or turn fragile below 24px. Read the family's page before using it small.
 
 ## Pairings
 
-All verified OFL. Each pairing states its voice and where it is strong. Load from Google Fonts or self-host; always keep the fallback stack.
+The pairings below are starting points. Check the current license and supported weights for any font you choose. Load only resources the project can use reliably, and provide appropriate fallbacks.
 
 ### Editorial and reading
 
@@ -93,7 +93,7 @@ Fallback stacks end in a generic family and prefer faces the reader already has:
 
 ## The scale
 
-Pick 5 or 6 sizes and never leave them. Adjacent sizes must differ by at least 25 percent or they read as a mistake. A working scale for product UI (base 16):
+Define text roles and a usable scale that fits the interface. These values are examples, not fixed limits. Closely sized levels can be useful when weight, spacing, or color distinguishes them.
 
 | Token | Size | Use |
 |---|---|---|
@@ -102,7 +102,7 @@ Pick 5 or 6 sizes and never leave them. Adjacent sizes must differ by at least 2
 | h2 | 24px | section title |
 | h3 | 18px | card or group title |
 | body | 16px | paragraphs, UI text |
-| small | 13px | captions, labels, never below 12px |
+| small | 13px | captions and labels; verify legibility in context |
 
 For marketing display type, `clamp()` keeps it fluid: `font-size: clamp(40px, 6vw, 64px)`.
 
@@ -110,9 +110,9 @@ For marketing display type, `clamp()` keeps it fluid: `font-size: clamp(40px, 6v
 
 - Body line height 1.5 to 1.7. Headings 1.1 to 1.3.
 - Line length 45 to 75 characters. A full-width paragraph on a desktop screen is a bug; set `max-width: 65ch` on reading columns.
-- Left-align text blocks. Centered paragraphs and centered buttons-on-center are the most reliable tells of generated layout. Center only short, single-line elements: a hero line, a figure caption.
+- Align text according to its content and context. Centering can suit short statements, labels, and some branded compositions; sustained reading text often benefits from a consistent left edge and moderate line length.
 - Tracking: slightly negative on display sizes (about -0.02em), zero on body, slightly positive on small all-caps labels (about 0.08em).
-- All-caps is a costume. Use it for one small label style at most, never for whole sentences, never for accessibility-critical text.
+- Use casing and tracking consistently. All caps can serve labels, brands, abbreviations, or display work; check readability and avoid using it as unexplained decoration.
 - Numbers in tables and metrics: tabular figures so columns align.
 - Never name a font you have not loaded, and always declare a fallback. Test with fonts blocked; the page must still be legible.
 
@@ -124,4 +124,4 @@ For marketing display type, `clamp()` keeps it fluid: `font-size: clamp(40px, 6v
 <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
 ```
 
-Two families, two or three weights total, `display=swap`. Self-host (Fontsource packages or your own files) when the product must not depend on a third party. Every extra weight is a real network cost on a phone.
+Use loading behavior and hosting that fit the product's reliability, privacy, and performance needs. Each additional font file has a transfer and rendering cost; weigh it against the visual and functional benefit.

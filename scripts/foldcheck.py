@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""foldcheck.py: static audit for machine-made interface patterns.
+"""foldcheck.py: static review cues for recurring interface patterns.
 
 Zero dependencies. Python 3.8+. Scans source files for the patterns listed in
 references/anti-slop.md: blinking and looping decoration, default gradient
@@ -13,7 +13,8 @@ Usage:
     python3 foldcheck.py --format json src/
     python3 foldcheck.py --allow-infinite src/   do not flag infinite animations
 
-Exit code 0 when no errors (warnings too, with --strict), else 1.
+Patterns are contextual cues, not style bans or authorship signals. Exit code 1
+is reserved for likely implementation/content defects, not visual preferences.
 """
 
 import argparse
@@ -43,32 +44,32 @@ JARGON = (
 )
 
 RULES = {
-    "EM-DASH": ("error", "Em dash in text. Use a period, a comma, or parentheses."),
-    "EN-DASH": ("warn", "En dash. For ranges use a plain hyphen; for pauses use other punctuation."),
-    "LOOP-INFINITE": ("error", "Infinite CSS animation. Only real states (loading, progress) and content tickers may loop; name them spinner, loading, progress, skeleton, marquee, or ticker."),
-    "KEYFRAME-DECOR": ("error", "Decorative keyframes (blink, pulse, bounce, float, glow, shimmer, flicker). Remove or report a real state."),
-    "GRADIENT-HERO": ("error", "Purple/indigo/fuchsia hue-to-hue gradient, the default generated hero. Use a flat color or a palette with a job."),
-    "RAINBOW-GRADIENT": ("warn", "Hue-to-hue gradient across distant hues. Gradients imitate material or they do not ship (references/color.md, rule 7)."),
-    "TINY-TEXT": ("warn", "Text below 12px. The floor is 12px everywhere, captions included."),
-    "GRADIENT-TEXT": ("error", "Gradient-filled text via background-clip. Use solid ink."),
-    "TEXT-GLOW": ("error", "text-shadow glow. Get emphasis from weight and color."),
-    "BIG-GLOW": ("warn", "Oversized box-shadow blur. Elevation should be quiet."),
-    "CYBERPUNK": ("error", "Cyberpunk/neon/glitch/synthwave styling. Style from print, tools, and wayfinding instead."),
-    "NEON-COLOR": ("error", "Neon terminal color. Choose a considered accent."),
-    "EMOJI-ICON": ("error", "Emoji used as UI icon or bullet. Use one icon set or plain text."),
-    "ICON-SPAM": ("warn", "Many icons in one file. Icons need a job; headings and cards usually need none."),
-    "BUTTON-SPAM": ("warn", "Many buttons in one file. One filled button per view; demote the rest."),
-    "LOREM": ("error", "Lorem ipsum. Write real copy."),
-    "COMING-SOON": ("error", "Coming soon placeholder. Either build it or do not show it."),
-    "TODO-MARKER": ("warn", "TODO/FIXME in source that ships to the interface. Resolve before delivery."),
-    "HOTLINK": ("error", "Hotlinked placeholder or stock image. Use local assets or your own compositions."),
+    "EM-DASH": ("info", "Punctuation cue only. Keep it when it fits the product voice; review generic or repetitive copy in context."),
+    "EN-DASH": ("info", "Punctuation cue only. Preserve intentional typography and the user's style."),
+    "LOOP-INFINITE": ("warn", "Review whether the loop communicates real state or supports this product. Decorative motion is not automatically wrong."),
+    "KEYFRAME-DECOR": ("info", "Review this motion in context. Keep it when it communicates state, interaction, or an intentional brand moment."),
+    "GRADIENT-HERO": ("info", "A familiar gradient was found. Check whether it fits the brief; the pattern alone is not a defect."),
+    "RAINBOW-GRADIENT": ("info", "A multi-hue gradient was found. Check its role, contrast, and fit with the product."),
+    "TINY-TEXT": ("warn", "Check legibility, zoom, and the relevant text-size requirements; no universal 12px floor is assumed."),
+    "GRADIENT-TEXT": ("info", "Check legibility and contrast in the rendered state; gradient text is not inherently a defect."),
+    "TEXT-GLOW": ("info", "Check whether the effect supports identity or hierarchy and preserves legibility."),
+    "BIG-GLOW": ("info", "Check whether this shadow communicates elevation or is decorative noise."),
+    "CYBERPUNK": ("info", "Style cue only. Keep the direction when it matches the user's brief and the product."),
+    "NEON-COLOR": ("info", "Color cue only. Check contrast, meaning, and product fit in context."),
+    "EMOJI-ICON": ("info", "Check cross-platform rendering and accessible meaning; emoji may be appropriate as product content."),
+    "ICON-SPAM": ("info", "Review whether each icon improves recognition or scanning; file count alone is not a defect."),
+    "BUTTON-SPAM": ("info", "Review action hierarchy and semantics; button count alone is not a defect."),
+    "LOREM": ("error", "Placeholder copy is present. Replace it or label the screen as a content prototype."),
+    "COMING-SOON": ("warn", "Check whether this is an intentional product message or an unfinished placeholder."),
+    "TODO-MARKER": ("warn", "Check whether this marker or unfinished work belongs in the shipped interface."),
+    "HOTLINK": ("warn", "Check asset rights, reliability, and whether this is a placeholder URL."),
     "ALERT-DIALOG": ("error", "alert()/confirm()/prompt(). Use inline messages, dialogs, or toasts with role=status."),
     "IMG-NO-ALT": ("error", "<img> without alt text."),
     "OUTLINE-KILL": ("warn", "outline: none/0 with no :focus-visible replacement in this file."),
-    "INTER-IDENTITY": ("warn", "Inter as the identity font. Pair a display voice or pick a characterful body."),
-    "JARGON": ("warn", "Slop vocabulary. Replace with the concrete claim it is hiding."),
-    "PILL-DEFAULT": ("info", "Fully rounded pill shape. Fine for chips; a radius scale is usually better."),
-    "UPPERCASE-SPAM": ("info", "Frequent text-transform: uppercase. All-caps is a costume; use one label style at most."),
+    "INTER-IDENTITY": ("info", "Check whether this typeface is a deliberate brand or product choice; do not reject it by default."),
+    "JARGON": ("info", "Check whether this claim is concrete and truthful in context; vocabulary alone is not a defect."),
+    "PILL-DEFAULT": ("info", "Check whether the shape communicates a chip, state, or brand choice."),
+    "UPPERCASE-SPAM": ("info", "Check readability and whether casing carries useful hierarchy or category meaning."),
     "IMPORTANT-SPAM": ("info", "Frequent !important. Fix specificity instead."),
 }
 
@@ -236,11 +237,11 @@ def scan_file(path):
         "important": len(IMPORTANT.findall(text)),
     }
     if counts["lucide"] > 8:
-        findings.append((0, 0, "ICON-SPAM", "warn",
-                         "{} icon references in one file. Icons need a job.".format(counts["lucide"])))
+        findings.append((0, 0, "ICON-SPAM", "info",
+                         "{} icon references in one file; review them in the rendered context.".format(counts["lucide"])))
     if counts["button"] > 6:
-        findings.append((0, 0, "BUTTON-SPAM", "warn",
-                         "{} <button> elements in one file. One filled button per view.".format(counts["button"])))
+        findings.append((0, 0, "BUTTON-SPAM", "info",
+                         "{} <button> elements in one file; review semantics and hierarchy per view.".format(counts["button"])))
     if counts["uppercase"] > 3:
         findings.append((0, 0, "UPPERCASE-SPAM", "info",
                          "{} uppercase transforms in one file.".format(counts["uppercase"])))
@@ -323,8 +324,8 @@ def main(argv=None):
 
     failed = totals["error"] > 0 or (args.strict and totals["warn"] > 0)
     if args.format != "json":
-        print("Fail. Fix findings before delivery (see references/anti-slop.md)." if failed
-              else "Pass. Still look at the result before delivery.")
+        print("Fail. Review error findings as likely defects; see references/anti-slop.md." if failed
+              else "No error-level findings. Review contextual cues and inspect the rendered result.")
     return 1 if failed else 0
 
 
