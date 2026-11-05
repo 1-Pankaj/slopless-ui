@@ -317,6 +317,62 @@ Blue-black, cool white ink, one mint-teal signal. Night transport and festival l
 
 Ink on background: 17.0:1. Muted on background: 7.0:1. Accent on background: 12.1:1. Accent ink on accent: 10.6:1.
 
+### 21. Espresso
+Deep roasted organic coffee, warm cashmere alabaster, and champagne gold. Luxury editorial with depth, prestige, and tactile warmth. Modes: Experience, Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#120F0D` |
+| Surface | `#1D1916` |
+| Ink | `#F7F4EE` |
+| Muted ink | `#A8A096` |
+| Accent | `#D4AF37` |
+| Accent ink | `#1A1408` |
+
+Ink on background: 17.4:1. Muted on background: 7.4:1. Accent on background: 9.1:1. Accent ink on accent: 8.7:1.
+
+### 22. Lapis
+Deep oceanic navy, crisp pearl ivory, and radiant warm amber. Authority and quiet confidence that catches people off guard. Modes: Persuade, Operate.
+
+| Role | Hex |
+|---|---|
+| Background | `#0A1128` |
+| Surface | `#131B38` |
+| Ink | `#FCFCFA` |
+| Muted ink | `#97A3B6` |
+| Accent | `#E6A15C` |
+| Accent ink | `#1A1105` |
+
+Ink on background: 18.2:1. Muted on background: 7.3:1. Accent on background: 8.6:1. Accent ink on accent: 8.5:1.
+
+### 23. Terracotta
+Earthy Mediterranean fired clay, warm bone, and crisp slate. Tactile grounded warmth with architectural balance. Modes: Read, Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#FBF9F5` |
+| Surface | `#F3EDE2` |
+| Ink | `#1E2224` |
+| Muted ink | `#5A6266` |
+| Accent | `#A84B2C` |
+| Accent ink | `#FFF5F0` |
+
+Ink on background: 15.3:1. Muted on background: 5.9:1. Accent on background: 5.4:1. Accent ink on accent: 5.3:1.
+
+### 24. Forest
+Dense atmospheric pine, muted sage, and warm chalk. Deep organic stillness with natural resonance and high taste. Modes: Experience, Operate.
+
+| Role | Hex |
+|---|---|
+| Background | `#131A14` |
+| Surface | `#1D261F` |
+| Ink | `#F4F6F0` |
+| Muted ink | `#95A396` |
+| Accent | `#7E9F6E` |
+| Accent ink | `#0E160F` |
+
+Ink on background: 16.3:1. Muted on background: 6.7:1. Accent on background: 6.0:1. Accent ink on accent: 6.2:1.
+
 ## Adapting a palette
 
 1. Keep the semantic distinctions your interface needs; add or remove roles as the product requires.

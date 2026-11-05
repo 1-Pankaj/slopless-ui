@@ -6,7 +6,25 @@ All notable changes to slopless-ui are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Added `/slopless-create` (and `/slopless-ui create`) scratch workflow governed by three strict discovery rules:
+  1. Context Pre-Check: Never ask questions if the user has already provided sufficient context (e.g., resumes, PRDs, project details).
+  2. Permission Gate: Always request permission before asking exploratory design questions on blank requests.
+  3. Restrained Customization: Limit customization to at most 2–3 high-value choices (atmosphere, premium color world, focal point).
+- Added 4 unexpected, high-taste premium palettes tested for WCAG AA & AAA:
+  - `Espresso`: Deep roasted coffee bean, warm cashmere alabaster, champagne gold.
+  - `Lapis`: Deep regal oceanic navy, crisp pearl ivory, warm amber.
+  - `Terracotta`: Earthy Mediterranean fired clay, warm bone, charcoal slate.
+  - `Forest`: Dense atmospheric pine, muted sage, warm chalk.
+- Added `TERMINAL-CHROME` and `FAKE-TELEMETRY` static review checks to `foldcheck.py` and added a regression test in `tests/run_tests.py`.
+
 ### Changed
+
+- Strictly prohibited fake terminal / HUD monospace numbering (`01 //`, `// OS • SYNCED`, `SYS SPEC INDEX [64]`) and fake status pills in standard web interfaces.
+- Strictly prohibited synthetic AI device frames and fake telemetry dials (`< 1.2% Drain / Hr`, artificial step/calorie progress bars, fake battery meters).
+- Strictly prohibited robotic developer jargon (`RUNTIME MATRIX`, `TAXONOMY BLUEPRINT`, `SENSOR TELEMETRY`) in place of truthful human copy.
+- Explicitly banned cliché AI color palettes (dark obsidian + neon cyan/mint/lime + purple neon) in favor of unexpected, tactile luxury palettes.
 
 - Reframed the skill around product understanding, task-specific hierarchy, real content and behavior, and task-scaled verification.
 - Replaced mandatory style prohibitions with contextual review cues; visual choices are evaluated against the product and user task.
@@ -23,6 +41,10 @@ All notable changes to slopless-ui are documented here. The format follows
   colors", "tweak spacing", "polish", "fix responsiveness", "make it look
   modern") and states the recolor rule before the skill is even opened.
 - The unused `docs/squint.png` is removed.
+- Hardened the review scripts against common source-pattern false positives: comments are ignored, method calls named `prompt` or `confirm` are not treated as blocking dialogs, multi-line image tags and CSS animation rules are inspected as units, and supported icon libraries, Tailwind `rounded-full`, modern gradient color functions, and same-file CSS variables are recognized.
+- `finish.mjs` now resolves Playwright from the checked project's working directory, reports failed asset requests as warnings by default, and offers `--strict-network` when failed requests should block the pass.
+- `contrast.py` now validates CLI arguments and hex colors cleanly, including missing option values and malformed `--pairs` data.
+- Added a standard-library cross-platform Python regression runner, retained the Bash wrapper, and pinned shell-script line endings to LF for Windows checkouts.
 
 ## [1.1.0] - 2026-11-02
 

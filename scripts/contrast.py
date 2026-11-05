@@ -14,6 +14,8 @@ Exit code 0 when every pair reaches AA body text (4.5:1) or --min, else 1.
 """
 
 import json
+import math
+import re
 import sys
 
 AA_BODY = 4.5
@@ -27,7 +29,7 @@ def parse_color(text):
         text = text[1:]
     if len(text) == 3:
         text = "".join(ch * 2 for ch in text)
-    if len(text) != 6:
+    if len(text) != 6 or not re.fullmatch(r"[0-9a-fA-F]{6}", text):
         raise ValueError("expected a hex color like #RRGGBB or #RGB, got {!r}".format(text))
     return tuple(int(text[i : i + 2], 16) for i in (0, 2, 4))
 
@@ -97,12 +99,25 @@ def main(argv):
     while i < len(args):
         arg = args[i]
         if arg == "--min":
-            minimum = float(args[i + 1])
+            if i + 1 >= len(args):
+                print("--min needs a numeric contrast threshold, for example --min 3.0.", file=sys.stderr)
+                return 2
+            try:
+                minimum = float(args[i + 1])
+            except ValueError:
+                print("--min needs a numeric contrast threshold, got {!r}.".format(args[i + 1]), file=sys.stderr)
+                return 2
+            if not math.isfinite(minimum) or not 1.0 <= minimum <= 21.0:
+                print("--min must be a finite contrast ratio from 1:1 through 21:1.", file=sys.stderr)
+                return 2
             i += 2
         elif arg == "--suggest":
             suggest = True
             i += 1
         elif arg == "--pairs":
+            if i + 1 >= len(args) or args[i + 1].startswith("-"):
+                print("--pairs needs a JSON file path.", file=sys.stderr)
+                return 2
             pairs_file = args[i + 1]
             i += 2
         elif arg in ("-h", "--help"):
@@ -113,8 +128,19 @@ def main(argv):
             i += 1
 
     if pairs_file:
-        with open(pairs_file, "r", encoding="utf-8") as handle:
-            values = [pair for group in json.load(handle) for pair in group]
+        try:
+            with open(pairs_file, "r", encoding="utf-8") as handle:
+                pairs = json.load(handle)
+        except (OSError, ValueError) as error:
+            print("Could not read --pairs file: {}".format(error), file=sys.stderr)
+            return 2
+        if not isinstance(pairs, list) or any(
+            not isinstance(pair, list) or len(pair) != 2 or not all(isinstance(color, str) for color in pair)
+            for pair in pairs
+        ):
+            print("--pairs must contain a JSON array of [foreground, background] string pairs.", file=sys.stderr)
+            return 2
+        values = [color for pair in pairs for color in pair]
 
     if len(values) < 2 or len(values) % 2 != 0:
         print("Give at least one foreground/background pair. See --help.")
@@ -122,8 +148,12 @@ def main(argv):
 
     failures = 0
     for index in range(0, len(values), 2):
-        fg = parse_color(values[index])
-        bg = parse_color(values[index + 1])
+        try:
+            fg = parse_color(values[index])
+            bg = parse_color(values[index + 1])
+        except ValueError as error:
+            print("Invalid color pair {}: {}".format(index // 2 + 1, error), file=sys.stderr)
+            return 2
         ratio = contrast_ratio(fg, bg)
         verdict = grade(ratio, minimum)
         line = "{} on {}: {:.2f}:1  {}".format(

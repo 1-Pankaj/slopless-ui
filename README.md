@@ -28,13 +28,9 @@ Slopless UI scales to the request. A focused fix stays focused. A new page start
 
 ## How it works
 
-1. Inspect the existing product, design tokens, content, assets, behavior, and tests where available.
-2. Establish the audience, task, domain information, real actions, content provenance, constraints, and success condition.
-3. Choose hierarchy, composition, components, typography, color, assets, and motion based on that evidence.
-4. Implement the functionality and states that belong to the requested scope. Do not invent production claims.
-5. Verify runtime, interaction, responsive behavior, accessibility, and visual fit as separate concerns. Use the checks that matter for the task and environment.
-
-Cards, gradients, rounded corners, dark mode, all-caps labels, familiar fonts, motion, and minimalism are allowed when they serve the product. Repetition without a reason is a prompt to review, not an automatic failure.
+1. **Phase 1: Design Contract:** Establish product identity, select 5–6 specific color tokens and bespoke typography, and define a content-driven layout before writing code.
+2. **Phase 2: Intentional Implementation:** Actively reject default AI slop (identical card grids, floating gradient blobs, icon spam, and fake metrics). Build responsive, accessible, real-state UI.
+3. **Phase 3: Automated Verification:** Run bundled verification tooling (`foldcheck.py` and `contrast.py`) to eliminate placeholder copy, layout issues, and accessibility flaws before handoff.
 
 ## Install
 
@@ -48,6 +44,8 @@ Or copy the skill folder into an agent's skill directory. Antigravity supports w
 
 Let a compatible agent discover the skill, or invoke it deliberately:
 
+> /slopless-create — Design a new website, landing page, or portfolio from scratch with bespoke visual identity. Follows the zero-annoyance context pre-check and permission gate.
+
 > Build a landing page for my developer tool. Use slopless-ui.
 
 > This dashboard feels generic. Review the product context and improve the information hierarchy without changing the established brand.
@@ -58,6 +56,8 @@ Let a compatible agent discover the skill, or invoke it deliberately:
 
 The optional scripts provide focused checks:
 
+Commands below assume the repository checkout is the skill folder. From another project, call the script using its full path inside the installed skill folder and keep the checked project as the working directory. On Windows, use `py -3` if that is the available Python launcher.
+
 ```bash
 python3 scripts/foldcheck.py src/                 # heuristic review cues
 python3 scripts/contrast.py "#201B12" "#F6F1E5"  # contrast calculation
@@ -66,9 +66,9 @@ node scripts/finish.mjs ./index.html              # screenshots and browser diag
 
 `foldcheck.py` flags a subset of recurring patterns. Most visual findings are informational or warnings, not style bans. An error points to a likely implementation/content issue such as placeholder copy or missing image alternative text. Findings can still be false positives; inspect the source and rendered result. A clean output is not a quality score.
 
-`contrast.py` calculates color ratios for the supplied pairs. The calculation is useful, but the applicable standard, context, and exceptions still matter.
+`contrast.py` accepts only `#RGB` and `#RRGGBB` colors and calculates their ratios. The calculation is useful, but the applicable standard, context, and exceptions still matter.
 
-`finish.mjs` is an optional Playwright-based check. A browser supplied by the host may be more appropriate. Screenshots and overflow checks help review a page but do not replace interaction, accessibility, or human visual assessment.
+`finish.mjs` is an optional Playwright-based check. It resolves Playwright from the checked project's working directory; run it from that project and pass the full path to the skill's script if the skill is installed elsewhere. Failed requests are warnings by default; `--strict-network` makes them fail the pass. A browser supplied by the host may be more appropriate. Screenshots and overflow checks help review a page but do not replace interaction, accessibility, or human visual assessment.
 
 ## Examples
 
@@ -78,11 +78,13 @@ The repository includes three illustrative before/after pairs: [oscilla](example
 
 ## Tests
 
-Run the repository suite with:
+Run the cross-platform repository suite with:
 
 ```bash
-bash tests/run_tests.sh
+python tests/run_tests.py
 ```
+
+On Windows, use `py -3 tests/run_tests.py`. The Bash wrapper is available with `bash tests/run_tests.sh` where Bash is installed.
 
 The suite checks script behavior, example fixtures, contrast-table calculations, and selected implementation invariants. Passing it confirms those checks only; it does not establish visual quality, usability, accessibility conformance, or performance. See [references/evaluation.md](references/evaluation.md) for a controlled way to evaluate whether the skill itself improves results.
 

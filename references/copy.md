@@ -16,6 +16,8 @@ Do not invent customer counts, testimonials, certifications, awards, uptime, int
 
 Avoid vague marketing language when a product fact or outcome is available. Words such as “seamless,” “revolutionary,” or “effortless” are not inherently forbidden; check whether they add verifiable information or merely take its place.
 
+Avoid pseudo-technical jargon and robotic developer theater: do not label standard application features, case studies, or portfolio items with artificial phrases like `RUNTIME MATRIX`, `TAXONOMY BLUEPRINT`, `SENSOR TELEMETRY`, or `SYS SPEC INDEX`. Speak with natural human authority, clarity, and real engineering substance.
+
 ## Review in context
 
 Read the page as the intended user. Check terminology consistency, sentence case where it matches the product, scanability, localization and text expansion, and whether errors, labels, units, dates, and numbers can be understood without visual styling. Preserve punctuation and tone choices when they fit the user's brief and do not harm clarity.

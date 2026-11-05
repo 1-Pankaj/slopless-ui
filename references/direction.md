@@ -8,6 +8,29 @@ For an existing product, examine the narrowest useful scope first: route and nei
 
 For greenfield work, use the brief and available product materials. Do not pretend to know facts the user has not supplied. Ask when an unknown blocks a consequential decision; otherwise state a modest assumption and avoid building fake proof around it.
 
+## Greenfield work and the /slopless-create protocol
+
+When building a product, landing page, portfolio, or web application from scratch, trigger or follow `/slopless-create` (or `/slopless-ui create`). The discovery flow is governed by three strict rules to guarantee high taste while eliminating user annoyance:
+
+### 1. The Context Pre-Check (Zero-Annoyance Rule)
+Before asking ANY questions, inspect the user's prompt, uploaded documents (e.g., resumes, PRDs, specs), and workspace files:
+- Did the user already supply project details, background history, target audience, preferred visual references, or key deliverables?
+- **If YES:** **DO NOT ASK QUESTIONS.** Asking questions about details the user already provided is an immediate failure and frustrates the user. Extract the details silently, define the thesis, and jump directly to the Design Contract.
+
+### 2. The Permission Gate (Never Ambush the User)
+If the prompt is minimal or open-ended (e.g. "Build me a portfolio" with no other details):
+- Never unleash a barrage of unprompted interview questions.
+- Take permission first:
+  > *"I have a strong baseline in mind, but to ensure this feels exactly right for you, would you like me to ask 2–3 quick questions to customize the mood and color palette, or should I propose a bespoke design contract right away?"*
+
+### 3. Restrained, Tailored Customization (Max 2–3 Focused Choices)
+If the user grants permission or explicitly asks to customize the direction, ask at most 2–3 high-value questions (using `ask_question` or multiple-choice options):
+- **Question 1 (Atmosphere & Mood):** E.g. Warm Editorial Luxury vs. High-Trust Utilitarian vs. Architectural Brutalism vs. Tactile Artisanal.
+- **Question 2 (Unexpected Premium Color Universe):** E.g. Roasted Espresso & Champagne Gold vs. Midnight Lapis & Pearl Ivory vs. Fired Terracotta & Bone vs. Deep Forest Moss & Chalk.
+- **Question 3 (Primary Focus & Layout):** E.g. Direct Artifact Showcase vs. Typographic Statement with Split Spec vs. Interactive Product Flow.
+
+Once answered, translate the choices immediately into the Design Contract and begin execution.
+
 ## Product fingerprint
 
 Capture only the details that will change the interface:
