@@ -11,6 +11,8 @@ Start with the questions a user needs to answer and the actions they need to tak
 | Compare attributes or values | Table, aligned rows, or comparison columns |
 | Follow events or ordered work | Timeline, agenda, stepper, or queue |
 | Find and manage a collection | Searchable list, board, table, or grouped collection |
+| Showcase work or archives | Kinetic editorial row list (`.pj`), full-width project streams with lateral hover offset |
+| Split narrative and inventory | Sticky anchor split viewport (`.sp2` + `.stk`) |
 | Inspect independent objects | Cards when separation improves scanning or action |
 | Work with place, time, or hierarchy | Map, calendar, or tree when those relationships matter |
 

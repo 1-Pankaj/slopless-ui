@@ -8,6 +8,15 @@ All notable changes to slopless-ui are documented here. The format follows
 
 ### Added
 
+- Added Section 2: **The Creative Art Direction & Worldbuilding Standard (The Antidote to Slop)**:
+  - Enforced a unifying conceptual metaphor (e.g. oceanic depth, architectural atelier, analog tactile instrument) rather than generic web components.
+  - Mandated monumental sculptural typography (`clamp(3.5rem, 12vw, 14rem)`) using heavy grotesque poster weights (**Dela Gothic One**, **Syne 800**, **Fraunces 900**, **Mona Sans 800**) paired with disciplined humanist body typography.
+  - Integrated sensory living canvases: procedural WebGL fragment shaders (ocean raymarching, caustics, volumetric lighting, fBm noise), Web Audio API ambient synthesis with user mute toggles, dynamic scroll-depth immersion tracking (`#dp`), and real-time day/night environment transitions.
+  - Introduced kinetic editorial layouts: full-width index rows (`.pj a:hover`) sliding laterally on custom cubic-bezier curves, sticky-split viewports (`.sp2` + `.stk`), difference-blended magnetic cursors (`#cu`), and Houdini `@property --a` rotating conic gradients.
+- Added 2 new oceanic palettes tested for WCAG AA & AAA (bringing the palette library to 26 total / 104 pairs):
+  - `Twilight Sea`: Deep twilight indigo, vivid coral flare, warm sand ink (13.4:1 AAA).
+  - `Night Sea`: Deep abyssal trench navy, bioluminescent cyan, glacial pearl ink (16.7:1 AAA).
+- Added **Dela Gothic One + Epilogue** and **Syne + Mona Sans** to curated typography pairings (bringing the library to 27 total tested pairings).
 - Added `/slopless-create` (and `/slopless-ui create`) scratch workflow governed by three strict discovery rules:
   1. Context Pre-Check: Never ask questions if the user has already provided sufficient context (e.g., resumes, PRDs, project details).
   2. Permission Gate: Always request permission before asking exploratory design questions on blank requests.
@@ -21,8 +30,9 @@ All notable changes to slopless-ui are documented here. The format follows
 
 ### Changed
 
-- Strictly prohibited fake terminal / HUD monospace numbering (`01 //`, `// OS • SYNCED`, `SYS SPEC INDEX [64]`) and fake status pills in standard web interfaces.
-- Strictly prohibited synthetic AI device frames and fake telemetry dials (`< 1.2% Drain / Hr`, artificial step/calorie progress bars, fake battery meters).
+- Strictly prohibited fake terminal / HUD monospace numbering (`01 //`, `02 //`, `// SYSTEM`, `SYS SPEC INDEX [64]`) and fake status pills in standard web interfaces.
+- Strictly prohibited synthetic AI device frames and fake telemetry dials (fake battery meters, simulated sensor dials, artificial gauges).
+- Strictly prohibited repetitive, uniform 3-card grids where every card has identical padding, badges, and link rows.
 - Strictly prohibited robotic developer jargon (`RUNTIME MATRIX`, `TAXONOMY BLUEPRINT`, `SENSOR TELEMETRY`) in place of truthful human copy.
 - Explicitly banned cliché AI color palettes (dark obsidian + neon cyan/mint/lime + purple neon) in favor of unexpected, tactile luxury palettes.
 

@@ -68,20 +68,22 @@ The pairings below are starting points. Check the current license and supported 
 | 20 | Syne | Outfit | Art-institution display, clean geometric | Agencies, exhibitions, campaigns |
 | 21 | Oswald | Barlow | Condensed poster voice, neutral body | Sports, transit, industrial |
 | 22 | Bebas Neue | Libre Franklin | All-caps poster face, franklin body | Events, film, box offices, posters |
+| 23 | Dela Gothic One | Epilogue | Sculptural Japanese-grotesque poster weight, humanist sans | Awwwards portfolios, creative technologist studios, immersive web |
+| 24 | Syne | Mona Sans | Bold architectural geometry, high-trust engineered body | Creative tech agencies, standout engineering studios |
 
 ### Special purposes
 
 | # | Display | Body | Voice | Strong for |
 |---|---|---|---|---|
-| 23 | Atkinson Hyperlegible | Atkinson Hyperlegible | One family, built for legibility | Civic, healthcare, education, accessibility-first |
-| 24 | Bricolage Grotesque | Bricolage Grotesque | One quirky grotesque across all weights | Personal sites, newsletters, indie products |
-| 25 | Silkscreen | Space Grotesk | Pixel face for tiny accents only | Game UI labels, retro touches, badges |
+| 25 | Atkinson Hyperlegible | Atkinson Hyperlegible | One family, built for legibility | Civic, healthcare, education, accessibility-first |
+| 26 | Bricolage Grotesque | Bricolage Grotesque | One quirky grotesque across all weights | Personal sites, newsletters, indie products |
+| 27 | Silkscreen | Space Grotesk | Pixel face for tiny accents only | Game UI labels, retro touches, badges |
 
 Notes:
 
-- 23 and 24 are single-voice systems. Use weight and size for hierarchy.
+- 25 and 26 are single-voice systems. Use weight and size for hierarchy.
 - 15 and 17 keep one house style for UI and data. Set numbers with `font-variant-numeric: tabular-nums`.
-- 25 is a seasoning, not a body face: Silkscreen below 14px is unreadable, and it never sets sentences.
+- 27 is a seasoning, not a body face: Silkscreen below 14px is unreadable, and it never sets sentences.
 - For anything read by many people, test at 200 percent zoom and at 390px width before shipping.
 
 Fallback stacks end in a generic family and prefer faces the reader already has:

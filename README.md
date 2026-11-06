@@ -28,9 +28,9 @@ Slopless UI scales to the request. A focused fix stays focused. A new page start
 
 ## How it works
 
-1. **Phase 1: Design Contract:** Establish product identity, select 5–6 specific color tokens and bespoke typography, and define a content-driven layout before writing code.
-2. **Phase 2: Intentional Implementation:** Actively reject default AI slop (identical card grids, floating gradient blobs, icon spam, and fake metrics). Build responsive, accessible, real-state UI.
-3. **Phase 3: Automated Verification:** Run bundled verification tooling (`foldcheck.py` and `contrast.py`) to eliminate placeholder copy, layout issues, and accessibility flaws before handoff.
+1. **Phase 1: Design Contract & Creative Worldbuilding:** Establish the unifying creative metaphor (oceanic depth, architectural atelier, analog instrument), select 5–6 specific color tokens, monumental typography, and define a content-driven layout before writing code.
+2. **Phase 2: Intentional Implementation:** Actively reject default AI slop (identical 3-card grids, fake terminal syntax `01 //`, floating gradient blobs, fake device mockups, and synthetic telemetry). Build responsive, accessible living canvases (procedural WebGL shaders, ambient Web Audio), kinetic editorial lists, and real-state UI.
+3. **Phase 3: Automated Verification:** Run bundled verification tooling (`foldcheck.py` and `contrast.py`) to eliminate placeholder copy, terminal chrome, fake telemetry, layout issues, and accessibility flaws before handoff.
 
 ## Install
 

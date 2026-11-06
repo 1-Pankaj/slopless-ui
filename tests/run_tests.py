@@ -141,9 +141,9 @@ class FoldcheckTests(unittest.TestCase):
 
     def test_terminal_chrome_and_fake_telemetry_detected(self):
         source = (
-            "<h2>01 // PRODUCTION CASE STUDY</h2>\n"
-            "<div>MYCALTRACK // OS • SYNCED</div>\n"
-            "<span>< 1.2% Drain / Hr</span>\n"
+            "<h2>01 // PRODUCTION MODULE</h2>\n"
+            "<div>CORE_ENGINE // OS</div>\n"
+            "<span>telemetry blueprint</span>\n"
         )
         result = self.scan(source, ".html")
         self.assertIn("TERMINAL-CHROME", result.stdout)

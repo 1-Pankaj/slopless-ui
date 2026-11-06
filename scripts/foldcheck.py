@@ -74,7 +74,7 @@ RULES = {
     "UPPERCASE-SPAM": ("info", "Check readability and whether casing carries useful hierarchy or category meaning."),
     "IMPORTANT-SPAM": ("info", "Frequent !important. Fix specificity instead."),
     "TERMINAL-CHROME": ("info", "Monospace terminal decoration (e.g. '01 //', '// OS', 'SYS SPEC'). Review whether this is a genuine CLI tool or decorative AI slop."),
-    "FAKE-TELEMETRY": ("info", "Simulated device telemetry or fake metric gauge (e.g. 'Drain / Hr', 'Calories Burned Today' in fake mockup frame). Replace with authentic artifacts or clean architecture."),
+    "FAKE-TELEMETRY": ("info", "Simulated device telemetry or fake metric gauge (e.g. simulated hardware dials, telemetry blueprints). Replace with authentic product artifacts or functional components."),
 }
 
 DECOR_KEYFRAMES = re.compile(
@@ -120,7 +120,7 @@ IMPORTANT = re.compile(r"!important")
 EM_DASH = re.compile("[\u2014\u2015]")
 EN_DASH = re.compile("[\u2013]")
 TERMINAL_CHROME = re.compile(r"(?:\b0\d\s*//|(?<![:/])//\s*[A-Z_]{2,}|\bSYS\s*SPEC\s*INDEX\b)")
-FAKE_TELEMETRY = re.compile(r"\b(drain\s*/\s*hr|calories\s*burned\s*today|sys\s*spec\s*index|telemetry\s*blueprint)\b", re.IGNORECASE)
+FAKE_TELEMETRY = re.compile(r"\b(telemetry\s*blueprint|sys\s*spec\s*index|hardware\s*telemetry|simulated\s*telemetry)\b", re.IGNORECASE)
 
 ANIMATION_INFINITE = re.compile(r"\banimation(?:-[\w-]+)?\s*:[^;}]*\binfinite\b", re.IGNORECASE)
 ANIMATION_EXEMPT = re.compile(

@@ -373,6 +373,34 @@ Dense atmospheric pine, muted sage, and warm chalk. Deep organic stillness with 
 
 Ink on background: 16.3:1. Muted on background: 6.7:1. Accent on background: 6.0:1. Accent ink on accent: 6.2:1.
 
+### 25. Twilight Sea
+Deep sunset indigo, sunset coral, and warm sand. Atmospheric oceanic immersion inspired by twilight coastlines and creative engineering portfolios. Modes: Experience, Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#2A0E6E` |
+| Surface | `#38168C` |
+| Ink | `#F6F0E4` |
+| Muted ink | `#D4CCE0` |
+| Accent | `#E8826A` |
+| Accent ink | `#1A083B` |
+
+Ink on background: 13.4:1. Muted on background: 9.8:1. Accent on background: 5.7:1. Accent ink on accent: 6.9:1.
+
+### 26. Night Sea
+Deep abyssal midnight, cold celestial ink, and bioluminescent electric cyan. High-concept creative technologist and nocturnal immersion. Modes: Experience, Operate.
+
+| Role | Hex |
+|---|---|
+| Background | `#070B2A` |
+| Surface | `#0E1442` |
+| Ink | `#E9EFFF` |
+| Muted ink | `#A3B6E0` |
+| Accent | `#6FE8FF` |
+| Accent ink | `#03071E` |
+
+Ink on background: 16.7:1. Muted on background: 9.5:1. Accent on background: 13.5:1. Accent ink on accent: 13.9:1.
+
 ## Adapting a palette
 
 1. Keep the semantic distinctions your interface needs; add or remove roles as the product requires.
