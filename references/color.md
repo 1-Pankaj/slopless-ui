@@ -32,10 +32,12 @@ Treat area proportions as a composition tool, not a fixed ratio. Reserve emphasi
 3. **Check contrast against the applicable standard.** WCAG 2.2 AA requires 4.5:1 for normal text and 3:1 for large text; non-text contrast has its own scope and exceptions. Use `contrast.py` as a calculation aid, not a conformance verdict.
 4. **Do not convey state with color alone.** Pair color with text, shape, icon, or another perceivable cue where needed.
 5. **Treat gradients, transparency, and dark surfaces as design choices.** Check legibility, context, performance, and product fit in rendered states. None is inherently a defect.
+6. **Spend one color on surprise.** Choose a dominant color from the subject, then one shock accent: a pairing that feels slightly wrong by convention but resolves through strong value contrast (tomato on deep teal, lemon on cobalt). Keep it near 5 percent of the area so it lands. A "safe unexpected" palette is not unexpected.
+7. **Do not take a palette by reflex.** Some clusters now read as machine-made because models reach for them constantly: espresso with champagne gold, cream or bone with terracotta, near-black with acid green or cyan, and any purple-to-pink gradient. Each is legitimate when the brief or brand asks for it. When the brief leaves color open, derive it from the subject instead, and mutate any preset you start from (shift hues 10 to 30 degrees) so the result is not a copy.
 
 ## Authored palettes
 
-The authored palettes below are optional starting points, not a recommendation to avoid framework or brand colors. Their documented pair ratios are recalculated by the repository test suite; test any adapted or newly introduced pair in its real context.
+The authored palettes below are optional starting points, not a recommendation to avoid framework or brand colors. Palettes 27 to 34 are deliberately bolder; use them when the brief wants a color the visitor will not expect. Their documented pair ratios are recalculated by the repository test suite; test any adapted or newly introduced pair in its real context.
 
 ### 1. Ledger
 Warm paper and oxblood ink. Editorial, exact, trustworthy. Modes: Read, Persuade.
@@ -401,6 +403,118 @@ Deep abyssal midnight, cold celestial ink, and bioluminescent electric cyan. Hig
 
 Ink on background: 16.7:1. Muted on background: 9.5:1. Accent on background: 13.5:1. Accent ink on accent: 13.9:1.
 
+### 27. Tomato Lagoon
+Warm and loud on deep teal. A shock pairing resolved by value contrast. Appetite, travel, hospitality. Modes: Persuade, Experience.
+
+| Role | Hex |
+|---|---|
+| Background | `#0C3B3C` |
+| Surface | `#134E4F` |
+| Ink | `#FFF0DC` |
+| Muted ink | `#9CC7BF` |
+| Accent | `#FF6A45` |
+| Accent ink | `#1D0A04` |
+
+Ink on background: 11.0:1. Muted on background: 6.6:1. Accent on background: 4.3:1. Accent ink on accent: 6.7:1.
+
+### 28. Butter Ultramarine
+A butter-yellow page with a hard electric blue. Playful, but serious about its type. Modes: Persuade, Operate.
+
+| Role | Hex |
+|---|---|
+| Background | `#FFE27A` |
+| Surface | `#FFEFA8` |
+| Ink | `#10176B` |
+| Muted ink | `#3E4590` |
+| Accent | `#2437FF` |
+| Accent ink | `#FFFFFF` |
+
+Ink on background: 12.1:1. Muted on background: 6.7:1. Accent on background: 5.4:1. Accent ink on accent: 6.9:1.
+
+### 29. Plum Chartreuse
+Night-market plum with one sharp chartreuse hit. Keep the accent to tiny, precise moments. Modes: Experience, Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#2B0F42` |
+| Surface | `#3B1A58` |
+| Ink | `#F7F1FF` |
+| Muted ink | `#BBA6D8` |
+| Accent | `#D6FF3D` |
+| Accent ink | `#1C2400` |
+
+Ink on background: 15.2:1. Muted on background: 7.6:1. Accent on background: 14.6:1. Accent ink on accent: 14.0:1.
+
+### 30. Oxblood Pistachio
+Deep oxblood with pistachio. Rich and a little unexpected, for premium goods that want to avoid black and gold. Mode: Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#3A0B16` |
+| Surface | `#4D1424` |
+| Ink | `#F6EEE2` |
+| Muted ink | `#CBA5AB` |
+| Accent | `#B9E98A` |
+| Accent ink | `#192808` |
+
+Ink on background: 14.7:1. Muted on background: 7.7:1. Accent on background: 12.2:1. Accent ink on accent: 11.2:1.
+
+### 31. Cobalt Lemon
+A full-bleed cobalt page with lemon. Rare and memorable; use big type and few elements. Modes: Experience, Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#1B28F0` |
+| Surface | `#2A37FF` |
+| Ink | `#F8F6EC` |
+| Muted ink | `#DADDFF` |
+| Accent | `#FFE14A` |
+| Accent ink | `#0F1470` |
+
+Ink on background: 7.4:1. Muted on background: 6.0:1. Accent on background: 6.2:1. Accent ink on accent: 11.9:1.
+
+### 32. Pool Cherry
+Pool-blue paper with cherry red. Summery and graphic. Retail, events, consumer products. Mode: Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#BDEFF3` |
+| Surface | `#D6F7F9` |
+| Ink | `#07262E` |
+| Muted ink | `#2F5963` |
+| Accent | `#D8002A` |
+| Accent ink | `#FFFFFF` |
+
+Ink on background: 12.7:1. Muted on background: 6.2:1. Accent on background: 4.3:1. Accent ink on accent: 5.3:1.
+
+### 33. Moss Hot Pink
+Botanical moss with hot pink. Loud wellness for brands that do not want beige. Modes: Persuade, Experience.
+
+| Role | Hex |
+|---|---|
+| Background | `#1D2B1A` |
+| Surface | `#273826` |
+| Ink | `#F1F5DF` |
+| Muted ink | `#A9BB9C` |
+| Accent | `#FF4F94` |
+| Accent ink | `#2B0614` |
+
+Ink on background: 13.4:1. Muted on background: 7.3:1. Accent on background: 4.8:1. Accent ink on accent: 6.0:1.
+
+### 34. Denim Marigold
+Workwear denim with a marigold signal. Craft, trades, logistics, tools. Modes: Operate, Persuade.
+
+| Role | Hex |
+|---|---|
+| Background | `#1F3A5F` |
+| Surface | `#2A4A74` |
+| Ink | `#FFF6E5` |
+| Muted ink | `#AFC3DD` |
+| Accent | `#FFB400` |
+| Accent ink | `#2A1D00` |
+
+Ink on background: 10.7:1. Muted on background: 6.4:1. Accent on background: 6.4:1. Accent ink on accent: 9.2:1.
+
 ## Adapting a palette
 
 1. Keep the semantic distinctions your interface needs; add or remove roles as the product requires.
@@ -423,4 +537,7 @@ Ink on background: 16.7:1. Muted on background: 9.5:1. Accent on background: 13.
 - Travel and maps: Atlas.
 - Editorial with attitude: Zine.
 - Kids and family: Crayon.
+- A bold, unexpected look for a consumer or creative product: Tomato Lagoon, Butter Ultramarine, Cobalt Lemon, Pool Cherry, or Moss Hot Pink.
+- A rich premium look that avoids black and gold: Oxblood Pistachio or Plum Chartreuse.
+- Workwear, trades, logistics: Denim Marigold.
 - If the brand already has colors, use them and enforce the structure and the contrast floor.

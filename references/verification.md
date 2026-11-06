@@ -8,6 +8,18 @@ For a small CSS or content fix, inspect the changed view and run a focused check
 
 Prefer project commands and a browser already available in the agent environment. If browser automation is absent, use an available preview or screenshot mechanism. If no rendered view can be inspected, review the implementation statically and report that visual behavior remains unverified.
 
+## Look first (new pages and redesigns)
+
+Reading your own code does not show what the page looks like. For a new page or a substantial redesign, do this before the tracks below, using the host's browser tool if it has one:
+
+1. Load the page at 390 (phone), 768 (tablet), and 1440 (laptop) wide, and add 320 when navigation or large type could be tight. Screenshot each.
+2. Run the **three-second test** (is there one memorable thing on the first screen?), the **phone test** (nothing overlaps, wraps badly, or scrolls sideways; check `document.documentElement.scrollWidth <= innerWidth`), and the **squint test** (shrink or blur the screenshot; hierarchy and a focal point must still read).
+3. Scroll to the bottom, hover and tab through the controls, trigger every animation, interrupt one halfway, and reload with reduced motion enabled. Nothing should be missing.
+4. Confirm the chosen fonts actually render and not the fallback, and that images load and keep their aspect ratio.
+5. Fix what looks off, then look again, because every fix can break something else.
+
+If you cannot open a browser, say so and list what stayed unverified. Never describe a visual result you did not see.
+
 ## Independent acceptance tracks
 
 ### Runtime and function
@@ -34,7 +46,7 @@ Prefer project commands and a browser already available in the agent environment
 
 ### Visual and content fit
 
-Inspect the page at its actual rendering size. Check first-glance comprehension, information priority, grouping, consistency, typography, asset quality, spacing, and whether each prominent element serves the product thesis. Look for generic repetition, unsupported credibility claims, and controls that merely look interactive. A gradient, card, font, or animation is not itself a defect.
+Inspect the page at its actual rendering size. Check first-glance comprehension, information priority, grouping, consistency, typography, asset quality, spacing, and whether each prominent element serves the product thesis. Look for generic repetition, unsupported credibility claims, and controls that merely look interactive. A gradient, card, font, or animation is not itself a defect, but a decorative one with no job is. Check that the signature moment works and reads well on a phone.
 
 If screenshots are used for comparison, keep viewport, browser, operating system, fonts, data, and state consistent where possible. A screenshot baseline can expose changes but cannot decide whether the interface is good.
 
@@ -45,3 +57,9 @@ Fix problems that block the task, mislead users, hide content, break interaction
 ## Report what happened
 
 Name the check and result, for example: “Ran `npm test` (pass); verified the invite flow in Chromium at 390px and 1280px; axe reported no critical violations. Screen-reader behavior was not checked.” Do not use a generic verification badge. Separate automated results, manual inspection, and unavailable checks. Never infer full accessibility, field performance, or user success from a local screenshot or one automated scan.
+
+## Reading `foldcheck.py` results
+
+- **`[error]`** (`LOREM`, `ALERT-DIALOG`, `IMG-NO-ALT`): fix before handoff.
+- **`[warn]`** (`OUTLINE-KILL`, `TODO-MARKER`, `COMING-SOON`, `HOTLINK`, `TINY-TEXT`, `LOOP-INFINITE`): fix, or state why it is right for this product.
+- **`[info]`**: the checker reports most visual patterns at this level so legitimate work is not blocked. That does not make them fine. For `EM-DASH`, `TERMINAL-CHROME`, `FAKE-TELEMETRY`, `GRADIENT-HERO`, `JARGON`, `ICON-SPAM`, and `BUTTON-SPAM`, either fix the finding or be able to say in one sentence why it serves this product. Use `--allow-infinite` only for a deliberate, state-bound or slow ambient effect, and mention it in the handoff.

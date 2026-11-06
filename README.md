@@ -4,9 +4,9 @@
 
 # slopless-ui
 
-**A product-first design and implementation skill for AI agents.**
+**A design-direction and craft skill for AI agents that build interfaces.**
 
-It helps an agent understand the interface's purpose, choose structure from the user's task, implement real content and behavior, and inspect relevant results. It does not replace one visual trend with another or ban familiar design choices.
+It helps an agent understand the interface's purpose, find a concept in the product's own world, commit to one memorable signature, build with surprising color, characterful type, crafted motion, and human-sounding copy, and look at the result in a real browser before anything is called done.
 
 [![CI](https://github.com/1-pankaj/slopless-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/1-pankaj/slopless-ui/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-8E3B2F)](LICENSE)
@@ -22,15 +22,15 @@ It helps an agent understand the interface's purpose, choose structure from the 
 
 ## The problem it targets
 
-Generated interfaces can look polished while still feeling interchangeable: generic information architecture, repeated components without a content reason, unsupported metrics, weak interaction states, or a desktop-first layout that was never inspected. The underlying issue is missing product-specific decisions, not a particular font, palette, card, gradient, shadow, or animation.
+Generated interfaces can look polished while still feeling interchangeable: generic information architecture, repeated components without a content reason, unsupported metrics, weak interaction states, or a desktop-first layout that was never inspected. The underlying issue is missing product-specific decisions. Banning patterns alone only moves a model to its next default, so the skill pairs a short list of firm bans with a process that decides each thing from the product's own world.
 
 Slopless UI scales to the request. A focused fix stays focused. A new page starts from the audience, task, content, and product context. A substantial redesign gets a concise design contract and a relevant browser and interaction review. The skill reports what it actually checked and what remains unknown.
 
 ## How it works
 
-1. **Phase 1: Design Contract & Creative Worldbuilding:** Establish the unifying creative metaphor (oceanic depth, architectural atelier, analog instrument), select 5–6 specific color tokens, monumental typography, and define a content-driven layout before writing code.
-2. **Phase 2: Intentional Implementation:** Actively reject default AI slop (identical 3-card grids, fake terminal syntax `01 //`, floating gradient blobs, fake device mockups, and synthetic telemetry). Build responsive, accessible living canvases (procedural WebGL shaders, ambient Web Audio), kinetic editorial lists, and real-state UI.
-3. **Phase 3: Automated Verification:** Run bundled verification tooling (`foldcheck.py` and `contrast.py`) to eliminate placeholder copy, terminal chrome, fake telemetry, layout issues, and accessibility flaws before handoff.
+1. **Phase 1: Design Contract & Creative Worldbuilding:** List six concrete nouns from the subject's world, write three genuinely different directions, pick one with a named signature moment, and pass a transplant test so the choice could not belong to any other product. Then fix the palette (with one shock accent), typography, content-driven layout, motion plan, and voice before writing code.
+2. **Phase 2: Intentional Implementation:** Actively reject default AI slop (identical 3-card grids, fake terminal syntax `01 //`, floating gradient blobs, fake device mockups, and synthetic telemetry). Build responsive, accessible interfaces with crafted motion, kinetic editorial lists, and real-state UI, adding a living canvas (procedural WebGL shaders, ambient Web Audio) only when the subject earns it.
+3. **Phase 3: Verification:** Open the page in a browser at phone, tablet, and laptop widths, interact with it, and squint at it. Then run the bundled tooling (`foldcheck.py` and `contrast.py`) to catch placeholder copy, terminal chrome, fake telemetry, and contrast problems, and fix or justify every finding before handoff.
 
 ## Install
 
@@ -44,7 +44,7 @@ Or copy the skill folder into an agent's skill directory. Antigravity supports w
 
 Let a compatible agent discover the skill, or invoke it deliberately:
 
-> /slopless-create — Design a new website, landing page, or portfolio from scratch with bespoke visual identity. Follows the zero-annoyance context pre-check and permission gate.
+> /slopless-create: design a new website, landing page, or portfolio from scratch with bespoke visual identity. Follows the zero-annoyance context pre-check and permission gate.
 
 > Build a landing page for my developer tool. Use slopless-ui.
 
@@ -64,7 +64,7 @@ python3 scripts/contrast.py "#201B12" "#F6F1E5"  # contrast calculation
 node scripts/finish.mjs ./index.html              # screenshots and browser diagnostics with Playwright
 ```
 
-`foldcheck.py` flags a subset of recurring patterns. Most visual findings are informational or warnings, not style bans. An error points to a likely implementation/content issue such as placeholder copy or missing image alternative text. Findings can still be false positives; inspect the source and rendered result. A clean output is not a quality score.
+`foldcheck.py` flags a subset of recurring patterns. Most visual findings are informational or warnings so legitimate work is not blocked, and the skill requires the agent to fix each one or justify it in a sentence. An error points to a likely implementation or content issue such as placeholder copy or missing image alternative text. Findings can still be false positives; inspect the source and rendered result. A clean output is not a quality score.
 
 `contrast.py` accepts only `#RGB` and `#RRGGBB` colors and calculates their ratios. The calculation is useful, but the applicable standard, context, and exceptions still matter.
 

@@ -25,7 +25,7 @@ One family can serve the whole interface, or distinct families can serve differe
 
 ## Pairings
 
-The pairings below are starting points. Check the current license and supported weights for any font you choose. Load only resources the project can use reliably, and provide appropriate fallbacks.
+The pairings below are starting points. Rotate across projects instead of taking the first row, because Space Grotesk, Inter, and Syne are the most overused faces in generated pages. Check the current license and supported weights for any font you choose. Load only resources the project can use reliably, and provide appropriate fallbacks.
 
 ### Editorial and reading
 
@@ -106,7 +106,7 @@ Define text roles and a usable scale that fits the interface. These values are e
 | body | 16px | paragraphs, UI text |
 | small | 13px | captions and labels; verify legibility in context |
 
-For marketing display type, `clamp()` keeps it fluid: `font-size: clamp(40px, 6vw, 64px)`.
+For marketing display type, `clamp()` keeps it fluid: `font-size: clamp(40px, 6vw, 64px)`. A signature headline can go far beyond this base scale, for example `clamp(3.5rem, 12vw, 14rem)` with tight leading (`0.92` to `1.05`), as long as it holds at 320px and the surrounding page stays calm.
 
 ## Rhythm rules
 

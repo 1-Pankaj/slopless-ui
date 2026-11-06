@@ -19,6 +19,14 @@ Use independent tracks so visual polish cannot conceal functional problems:
 
 Use more than one independent reviewer when possible and report disagreement. A proposed rubric or threshold is a team heuristic until validated; no one aesthetic preference, pattern count, or model self-rating proves quality.
 
+## Optional starter rubric and prompts
+
+This is a team heuristic until validated, useful for blind side-by-side review. Score each item 0 (generic), 1 (decent), or 2 (distinctive and well executed): memorable first screen, palette, typography, layout shaped by the content, motion as one system, human copy with nothing invented, flawless 390px behavior, states and details, and honesty of the handoff.
+
+Starter prompts, to run at least twice per condition: a landing page for a luxury leather backpack brand (little context); a portfolio for a React Native developer from a supplied resume (real content); a redesign of a supplied generic dashboard (existing product); a pricing page for a log search tool (table versus card default, fake proof); a one-screen plant-watering app (small scope, states); and a loud site for a children's science museum (can it be bold without chaos).
+
+Mechanical checks per run: no `lorem` or empty `alt`, no horizontal overflow at 320, 390, and 768, every text pair at AA contrast, no em dashes in visible copy, and no decorative infinite loops.
+
 ## Decide and maintain
 
 Accept a change when it improves product-specific decisions or observable quality without materially harming task success, accessibility, responsiveness, performance, or cost. Keep failed cases and justified exceptions. Refresh tasks over time, preserve an untouched holdout, and revisit visual pattern cues as trends and model defaults change. A static detector may surface evidence for review; it must not infer authorship or declare an interface good or bad by itself.

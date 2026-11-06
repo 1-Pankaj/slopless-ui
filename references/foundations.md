@@ -11,8 +11,8 @@ Start with the questions a user needs to answer and the actions they need to tak
 | Compare attributes or values | Table, aligned rows, or comparison columns |
 | Follow events or ordered work | Timeline, agenda, stepper, or queue |
 | Find and manage a collection | Searchable list, board, table, or grouped collection |
-| Showcase work or archives | Kinetic editorial row list (`.pj`), full-width project streams with lateral hover offset |
-| Split narrative and inventory | Sticky anchor split viewport (`.sp2` + `.stk`) |
+| Showcase work or archives | Kinetic editorial index rows: full-width project streams with a lateral hover offset and a tap or focus equivalent |
+| Split narrative and inventory | Sticky-anchor split viewport: a pinned context column beside scrolling detail |
 | Inspect independent objects | Cards when separation improves scanning or action |
 | Work with place, time, or hierarchy | Map, calendar, or tree when those relationships matter |
 
@@ -20,11 +20,11 @@ The same content may support several valid structures. Choose based on the user'
 
 ## Build hierarchy from meaning
 
-- Give urgent, actionable, and identity-setting content the emphasis it needs. Several things may deserve attention; do not force exactly one focal point when the task requires comparison.
+- Give the first screen one clear focal point, and give urgent, actionable, and identity-setting content the emphasis it needs. A comparison view may need several items of equal weight, but even then one thing should lead.
 - Group related content with proximity, alignment, headings, or surfaces. Use borders, color, and elevation where they clarify grouping, state, or interaction.
 - Vary density by use. An operations view may need compact aligned rows; a reading view needs comfortable measure; a campaign page may use large imagery and display type.
 - Use familiar conventions where they reduce learning effort. Break conventions only when the product context makes the benefit clear.
-- Treat a repeated pattern as a signal to inspect hierarchy, not as proof that the pattern is wrong. Cards, badges, icons, labels, dividers, grids, and repeated layouts can be appropriate.
+- Treat a repeated pattern as a signal to inspect hierarchy. Cards, badges, icons, labels, dividers, grids, and repeated layouts are right when the content calls for them and wrong when they are the default for everything.
 
 ## Components and real behavior
 
